@@ -10,6 +10,19 @@ const UserSchema = new mongoose.Schema({
 	password: {
 		type: String,
 		required: true
+	},
+	username: String,
+	numTrivsCreated: {
+		type: Number,
+		default: 0
+	},
+	numTrivsCompeted: {
+		type: Number,
+		default: 0
+	},
+	numTrivsWon: {
+		type: Number,
+		default: 0
 	}
 });
 
