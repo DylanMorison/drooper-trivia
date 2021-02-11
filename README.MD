@@ -5,8 +5,6 @@
 
 <p align="left"> <a href="https://github.com/ryo-ma/github-profile-trophy"><img src="https://github-profile-trophy.vercel.app/?username=dylanmorison" alt="dylanmorison" /></a> </p>
 
-<p align="left"> <a href="https://twitter.com/https://twitter.com/morison_dylan" target="blank"><img src="https://img.shields.io/twitter/follow/https://twitter.com/morison_dylan?logo=twitter&style=for-the-badge" alt="https://twitter.com/morison_dylan" /></a> </p>
-
 - 🔭 I’m currently working on [EcomDegree-Podcast for Vindici-Co](https://github.com/Vindici-Co/EcomDegree-Podcast)
 - 🔭 I’m currently working on [Drooper_Trivia](https://github.com/DylanMorison/drooper-trivia)
 
