@@ -2,7 +2,10 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const RoundSchema = new Schema({
-	roundTitle: String,
+	roundTitle: {
+		type: String,
+		required: true
+	},
 	answerType: {
 		type: String,
 		required: true,
@@ -20,7 +23,9 @@ const RoundSchema = new Schema({
 const CompetitorsSchema = new Schema({
 	user: {
 		type: Schema.Types.ObjectId,
-		ref: "user"
+		ref: "user",
+		unique: true,
+		username: { type: String, default: "competitor" }
 	},
 	score: {
 		type: Number,

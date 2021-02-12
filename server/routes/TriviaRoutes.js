@@ -69,4 +69,33 @@ router.post("/round/create", requireAuth, anserTypeCheck, async (req, res) => {
 	}
 });
 
+router.delete("/round/delete", requireAuth, async (req, res) => {
+	const user = req.user;
+	const { _id, roundId } = req.body;
+
+	try {
+		const currentTriva = await Trivia.findById({ _id, author: user._id });
+
+		if (currentTriva) {
+			currentTriva.rounds.id(roundId).remove();
+			await currentTriva.save((err, doc) => {
+				if (err) return res.status(400).send(err.message);
+				return res.send(doc);
+			});
+		}
+	} catch (err) {
+		res.status(400).send(err.message);
+	}
+});
+
+router.delete("/delete", requireAuth, async (req, res) => {
+	const user = req.user;
+	const { _id } = req.body;
+
+	await Trivia.findByIdAndDelete({ _id, author: user._id }, (err, doc) => {
+		if (err) return res.status(400).send(err.message);
+		return res.send(doc);
+	});
+});
+
 export default router;

@@ -11,7 +11,6 @@ const UserSchema = new mongoose.Schema({
 		type: String,
 		required: true
 	},
-	username: String,
 	numTrivsCreated: {
 		type: Number,
 		default: 0
