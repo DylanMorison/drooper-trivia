@@ -39,7 +39,7 @@ router.post("/signin", async (req, res) => {
 
 		const token = jwt.sign({ userId: user._id }, config.get("jwtSecret"));
 
-		res.send({ token });
+		res.send({ token, userId: user._id });
 	} catch (error) {
 		return res.status(422).send({ error: "Invalid Password or Email" });
 	}
