@@ -7,48 +7,52 @@ const Trivia = mongoose.model("Trivia");
 
 const router = express.Router();
 
+/**
+ * When we add a competitor we will need the
+ * competitor's _id to store, as well as a username
+ */
+
 router.post("/add/competitor", requireAuth, async (req, res) => {
 	const user = req.user;
-	const { _id, newCompetitor } = req.body;
+	const { triv_id, newCompetitorID, username } = req.body;
 
 	try {
-		const currentTriva = await Trivia.findById({ _id, author: user._id });
+		const currentTrivia = await Trivia.findById({ _id: triv_id, author: user._id });
 
-		if (currentTriva) {
-			const testDup = await currentTriva.checkCompetitorsForDups(newCompetitor);
+		if (currentTrivia) {
+			const userExistsBool = currentTrivia.checkForCompetitor(newCompetitorID);
 
-			if (testDup) {
-				return;
+			if (!userExistsBool) {
+				currentTrivia.competitors.push({
+					competitorID: newCompetitorID,
+					score: 0,
+					username
+				});
+				await currentTrivia.save((err, doc) => {
+					if (err) return res.status(400).send(err.message);
+					res.send(doc);
+					return;
+				});
+			} else {
+				res.status(400).send("ERROR! This user has already been added to Trivia!");
 			}
-
-			currentTriva.competitors.push({ user: newCompetitor, score: 0 });
-			await currentTriva.save((err, doc) => {
-				if (err) return res.status(400).send(err.message);
-				res.send(doc);
-				return;
-			});
 		}
 	} catch (err) {
 		res.status(400).send(err.message);
 	}
 });
 
-router.post("/remove/competitor", requireAuth, async (req, res) => {
+router.delete("/remove/competitor", requireAuth, async (req, res) => {
 	const user = req.user;
-	const { _id, newCompetitor } = req.body;
+	const { triv_id, competitorID } = req.body;
 
 	try {
-		const currentTriva = await Trivia.findById({ _id, author: user._id });
+		const currentTrivia = await Trivia.findById({ _id: triv_id, author: user._id });
 
-		if (currentTriva) {
-			const testDup = await currentTriva.checkCompetitorsForDups(newCompetitor);
+		if (currentTrivia) {
+			currentTrivia.removeCompetitor(competitorID);
 
-			if (testDup) {
-				return;
-			}
-
-			currentTriva.competitors.push({ user: newCompetitor, score: 0 });
-			await currentTriva.save((err, doc) => {
+			await currentTrivia.save((err, doc) => {
 				if (err) return res.status(400).send(err.message);
 				res.send(doc);
 				return;
@@ -61,7 +65,6 @@ router.post("/remove/competitor", requireAuth, async (req, res) => {
 
 router.get("/competitors", requireAuth, async (req, res) => {
 	const user = req.user;
-
 	const { _id } = req.body;
 
 	await Trivia.findById({ _id, author: user._id }, (err, doc) => {

@@ -32,12 +32,10 @@ router.post("/create", requireAuth, async (req, res) => {
 	const { numRounds } = req.body;
 
 	try {
-		const newTrivia = await new Trivia({ numRounds, author: user._id }).save(
-			(err, doc) => {
-				if (err) return res.status(400).send(err.message);
-				res.send(doc);
-			}
-		);
+		await new Trivia({ numRounds, author: user._id }).save((err, doc) => {
+			if (err) return res.status(400).send(err.message);
+			res.send(doc);
+		});
 	} catch (err) {
 		res.status(400).send(err.message);
 	}
@@ -46,6 +44,7 @@ router.post("/create", requireAuth, async (req, res) => {
 router.post("/round/create", requireAuth, anserTypeCheck, async (req, res) => {
 	const user = req.user;
 	const { triviaID, roundTitle, answerType, numQuestions, questions, answers } = req.body;
+	debugger;
 
 	try {
 		const currentTrivia = await Trivia.findOne({ _id: triviaID, author: user._id });
