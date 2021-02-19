@@ -1,7 +1,7 @@
 server/node_modules
 server/config/default.json
 
-client/node_modules
-awesomeProject/node_modules
-awesomeProject/.expo
-awesomeProject/.expo-shared
+react/node_modules
+react-native/node_modules
+react-native/.expo
+react-native/.expo-shared
