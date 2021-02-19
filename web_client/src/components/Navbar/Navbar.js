@@ -1,17 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
 import { authMenu, visitorMenu } from "./MenuItems";
 import { Button } from "../Button";
 
+import { connect } from "react-redux";
+
 import "./Navbar.css";
 
-function Navbar() {
+function Navbar({ auth }) {
 	const [clicked, setClicked] = useState(false);
+	const [navLinks, setNavLinks] = useState(visitorMenu);
+
+	const navlinkChange = () => {
+		console.log(auth);
+		if (auth) {
+			setNavLinks(authMenu);
+		} else {
+			setNavLinks(visitorMenu);
+		}
+	};
 
 	const handleClick = () => {
 		setClicked(!clicked);
 	};
+
+	useEffect(navlinkChange, [auth]);
 
 	return (
 		<nav className="NavbarItems">
@@ -22,9 +35,9 @@ function Navbar() {
 				<i className={clicked ? "fas fa-times" : "fas fa-bars"}></i>
 			</div>
 			<ul className={clicked ? "nav-menu active" : "nav-menu"}>
-				{authMenu.map((item, index) => {
+				{navLinks.map((item, index) => {
 					return (
-						<Link to={item.link} className="link">
+						<Link to={item.link} className="link" onClick={handleClick}>
 							<li key={index}>
 								<a className={item.cName} href={item.url}>
 									{item.title}
@@ -41,4 +54,8 @@ function Navbar() {
 	);
 }
 
-export default Navbar;
+const mapStateToProps = (state) => {
+	return { auth: state.auth.isAuthenticated };
+};
+
+export default connect(mapStateToProps)(Navbar);

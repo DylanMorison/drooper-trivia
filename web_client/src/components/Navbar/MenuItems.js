@@ -24,9 +24,9 @@ export const authMenu = [
 		link: "contact"
 	},
 	{
-		title: "Sign up",
+		title: "Logout",
 		url: "#",
-		cName: "nav-links-mobile",
+		cName: "nav-links",
 		link: "/signup"
 	}
 ];
@@ -35,16 +35,19 @@ export const visitorMenu = [
 	{
 		title: "Home",
 		url: "#",
-		cName: "nav-links"
+		cName: "nav-links",
+		link: "/home"
 	},
 	{
-		title: "Contact Us",
+		title: "Sign in",
 		url: "#",
-		cName: "nav-links"
+		cName: "nav-links",
+		link: "/signin"
 	},
 	{
 		title: "Sign up",
 		url: "#",
-		cName: "nav-links-mobile"
+		cName: "nav-links",
+		link: "/signup"
 	}
 ];
