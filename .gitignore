@@ -2,3 +2,6 @@ server/node_modules
 server/config/default.json
 
 client/node_modules
+awesomeProject/node_modules
+awesomeProject/.expo
+awesomeProject/.expo-shared

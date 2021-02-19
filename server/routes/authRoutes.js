@@ -6,6 +6,16 @@ const User = mongoose.model("User");
 
 const router = express.Router();
 
+router.get("/", auth, async (req, res) => {
+	try {
+		const user = await User.findById(req.user.id).select("-password");
+		res.json(user);
+	} catch (error) {
+		console.error(err.message);
+		res.status(500).send("Server Error");
+	}
+});
+
 router.post("/signup", async (req, res) => {
 	const { email, password } = req.body;
 
