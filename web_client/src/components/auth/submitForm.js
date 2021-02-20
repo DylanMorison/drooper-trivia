@@ -19,6 +19,4 @@ export default function (email, password, callback, setError, confirmPassword = 
 	}
 
 	callback(email, password);
-
-	return;
 }

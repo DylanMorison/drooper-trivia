@@ -1,15 +1,20 @@
 import React, { useState } from "react";
 import { Button } from "../Button";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 import { signin, signup } from "../actions/auth";
 import submitForm from "./submitForm";
 import "./authForm.css";
 
-const AuthForm = ({ headerText, errorMessage, isSignup, signin, signup }) => {
+const AuthForm = ({ headerText, isSignup, signin, isAuthenticated }) => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const [error, setError] = useState(null);
+
+	if (isAuthenticated) {
+		return <Redirect to="/trivia" />;
+	}
 
 	return (
 		<div className="authform">
@@ -76,8 +81,6 @@ const AuthForm = ({ headerText, errorMessage, isSignup, signin, signup }) => {
 	);
 };
 
-const mapStateToProps = (state) => {
-	return {};
-};
+const mapStateToProps = (state) => ({ isAuthenticated: state.auth.isAuthenticated });
 
 export default connect(mapStateToProps, { signin, signup })(AuthForm);
