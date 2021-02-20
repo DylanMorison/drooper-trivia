@@ -27,7 +27,7 @@ export const authMenu = [
 		title: "Logout",
 		url: "#",
 		cName: "nav-links",
-		link: "/signup"
+		link: "/logout"
 	}
 ];
 

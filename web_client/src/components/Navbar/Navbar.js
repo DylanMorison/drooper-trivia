@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { authMenu, visitorMenu } from "./MenuItems";
-import { Button } from "../Button";
-
 import { connect } from "react-redux";
+import { authMenu, visitorMenu } from "./MenuItems";
+import { logout } from "../actions/auth";
 
 import "./Navbar.css";
 
-function Navbar({ auth }) {
+function Navbar({ auth, logout }) {
 	const [clicked, setClicked] = useState(false);
 	const [navLinks, setNavLinks] = useState(visitorMenu);
 
@@ -42,9 +41,6 @@ function Navbar({ auth }) {
 					);
 				})}
 			</ul>
-			{/* <Button buttonSize="btn-large" buttonStyle="btn--primary" className="signup-btn">
-				Signup
-			</Button> */}
 		</nav>
 	);
 }
@@ -53,4 +49,4 @@ const mapStateToProps = (state) => {
 	return { auth: state.auth.isAuthenticated };
 };
 
-export default connect(mapStateToProps)(Navbar);
+export default connect(mapStateToProps, { logout })(Navbar);
