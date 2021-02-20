@@ -1,11 +1,13 @@
 import { SIGNIN, LOGOUT, SIGNUP } from "./types";
 import axios from "axios";
 
-export const login = (email, password) => async (dispatch) => {
+export const signin = (email, password) => async (dispatch) => {
 	const res = await axios.post("http://localhost:5000/api/auth/signin", {
 		email,
 		password
 	});
+
+	console.log(res.data);
 
 	dispatch({ type: SIGNIN, payload: res.data });
 };

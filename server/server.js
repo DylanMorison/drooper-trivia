@@ -1,6 +1,7 @@
 import "./models/Users.js";
 import "./models/Trivia.js";
 import express from "express";
+import cors from "cors";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import trivRoutes from "./routes/triviaRoutes.js";
@@ -12,6 +13,7 @@ const app = express();
 const jsonNoExtended = express.json({ extended: false });
 
 app.use(jsonNoExtended);
+app.use(cors());
 app.use("/api/auth", authRoutes);
 app.use("/api/triv", trivRoutes);
 app.use("/api/users", userRoutes);
