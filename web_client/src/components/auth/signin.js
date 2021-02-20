@@ -9,7 +9,7 @@ export const signin = (props) => {
 	return (
 		<div>
 			<AuthForm
-				headerText="Sign In!"
+				headerText="Sign In"
 				errorMessage="Error with Sign In :("
 				onSubmit={handleSubmit}
 				signup={false}

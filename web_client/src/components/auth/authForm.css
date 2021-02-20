@@ -1,0 +1,73 @@
+@media screen and (max-width: 960px) {
+	.authform .container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 70px 2px;
+		margin: 10px;
+		box-shadow: 0px 0px 18px #6fa3d3;
+		text-align: center;
+	}
+
+	.authform .container div {
+		margin: 15px 0px;
+		padding: 10px 0px;
+	}
+
+	.authform .container h1 {
+		text-shadow: 15px 0px 45px #d5e7e7;
+		font-size: 45px;
+	}
+
+	.authform .container input {
+		font-size: 21px;
+		padding: 15px;
+		border-radius: 4px;
+		border: 1px solid;
+	}
+
+	.authform .container Button {
+		padding: 15px 90px;
+	}
+}
+@media only screen and (min-width: 961px) {
+	.authform {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+	}
+
+	.authform .container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		width: 40vw;
+		padding: 50px 10px;
+		box-shadow: 0px 0px 18px #6fa3d3;
+		text-align: center;
+		margin-top: 50px;
+		border-radius: 4px;
+	}
+
+	.authform .container div {
+		margin: 30px 0px;
+	}
+
+	.authform .container h1 {
+		text-shadow: 15px 0px 45px #d5e7e7;
+		font-size: 45px;
+	}
+
+	.authform .container input {
+		font-size: 21px;
+		padding: 15px;
+		border-radius: 4px;
+		border: 1px solid;
+	}
+
+	.authform .container Button {
+		padding: 15px 90px;
+		border-radius: 4px;
+	}
+}

@@ -7,7 +7,7 @@ export const signup = (props) => {
 
 	return (
 		<AuthForm
-			headerText="Sign Up!"
+			headerText="Sign Up"
 			errorMessage="Error with Sign Up :("
 			onSubmit={handleSubmit}
 			signup={true}
