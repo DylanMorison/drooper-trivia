@@ -11,6 +11,7 @@ import signup from "./components/auth/signup";
 import logout from "./components/auth/logout";
 import store from "./store";
 import setJwtToken from "./utils/setJwtToken";
+import PrivateRoute from "./components/routing/PrivateRoute";
 import "./App.css";
 
 if (localStorage.token) {
@@ -25,9 +26,9 @@ function App() {
 					<Navbar />
 					<Switch>
 						<Route path="/home" exact component={Home} />
-						<Route path="/trivia" exact component={Trivia} />
-						<Route path="/profile" exact component={Profile} />
-						<Route path="/contact" exact component={Contact} />
+						<PrivateRoute path="/trivia" exact component={Trivia} />
+						<PrivateRoute path="/profile" exact component={Profile} />
+						<PrivateRoute path="/contact" exact component={Contact} />
 						<Route path="/signin" exact component={signin} />
 						<Route path="/signup" exact component={signup} />
 						<Route path="/logout" exact component={logout} />
