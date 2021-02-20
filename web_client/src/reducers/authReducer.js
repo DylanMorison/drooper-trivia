@@ -1,27 +1,27 @@
-import { SIGNUP, SIGNIN, LOGOUT } from "../components/actions/types";
+import { SIGNUP, SIGNIN, LOGOUT, LOAD_USER } from "../actions/types";
 
 const initialState = {
-	//jwt_token: localStorage.getItem("jwt_token"),
 	isAuthenticated: false,
-	user_id: null
+	userId: null
 };
 
 export default function (state = initialState, action) {
 	const { type, payload } = action;
 
 	switch (type) {
+		case LOAD_USER:
+			return { ...state, isAuthenticated: true, userId: payload._id };
 		case SIGNIN:
 		case SIGNUP:
-			const { token, user_id } = payload;
+			const { token, userId } = payload;
 			localStorage.setItem("jwt_token", token);
-			return { ...state, token, user_id, isAuthenticated: true };
+			return { ...state, userId, isAuthenticated: true };
 		case LOGOUT:
 			localStorage.removeItem("jwt_token");
 			return {
 				...state,
-				token: null,
 				isAuthenticated: false,
-				user_id: null
+				userId: null
 			};
 		default:
 			return state;

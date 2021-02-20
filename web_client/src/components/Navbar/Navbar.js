@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { authMenu, visitorMenu } from "./MenuItems";
-import { logout } from "../actions/auth";
-
+import { logout } from "../../actions/auth";
 import "./Navbar.css";
 
 function Navbar({ auth, logout }) {
+	console.log(auth);
+
 	const [clicked, setClicked] = useState(false);
 	const [navLinks, setNavLinks] = useState(visitorMenu);
 
@@ -26,9 +27,20 @@ function Navbar({ auth, logout }) {
 
 	return (
 		<nav className="NavbarItems">
-			<h1 className="navbar-logo">
-				Drooper Trivia <i className="fas fa-hat-cowboy"></i>
-			</h1>
+			{auth ? (
+				<Link to="/trivia" className="link">
+					<h1 className="navbar-logo">
+						Drooper Trivia <i className="fas fa-hat-cowboy"></i>
+					</h1>
+				</Link>
+			) : (
+				<Link to="/" className="link">
+					<h1 className="navbar-logo">
+						Drooper Trivia <i className="fas fa-hat-cowboy"></i>
+					</h1>
+				</Link>
+			)}
+
 			<div className="menu-icon" onClick={handleClick}>
 				<i className={clicked ? "fas fa-times" : "fas fa-bars"}></i>
 			</div>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button } from "../Button";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { signin, signup } from "../actions/auth";
+import { signin, signup } from "../../actions/auth";
 import submitForm from "./submitForm";
 import "./authForm.css";
 

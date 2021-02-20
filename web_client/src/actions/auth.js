@@ -1,14 +1,15 @@
-import { SIGNIN, LOGOUT, SIGNUP } from "./types";
+import { SIGNIN, LOGOUT, SIGNUP, LOAD_USER } from "./types";
 import axios from "axios";
-import setJwtToken from "../../utils/setJwtToken";
+import setJwtToken from "../utils/setJwtToken";
 
 export const loadUser = () => async (dispatch) => {
-	if (localStorage.token) {
-		setJwtToken(localStorage.token);
+	if (localStorage.jwt_token) {
+		setJwtToken(localStorage.jwt_token);
 	}
 
 	try {
-		const res = await axios.get("/api/auth");
+		const res = await axios.get("http://localhost:5000/api/auth/");
+		dispatch({ type: LOAD_USER, payload: res.data });
 	} catch (err) {}
 };
 

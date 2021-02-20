@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import Navbar from "./components/Navbar/Navbar";
@@ -12,20 +12,26 @@ import logout from "./components/auth/logout";
 import store from "./store";
 import setJwtToken from "./utils/setJwtToken";
 import PrivateRoute from "./components/routing/PrivateRoute";
+import { loadUser } from "./actions/auth";
+
 import "./App.css";
 
-if (localStorage.token) {
-	setJwtToken(localStorage.token);
+if (localStorage.jwt_token) {
+	setJwtToken(localStorage.jwt_token);
 }
 
-function App() {
+const App = () => {
+	useEffect(() => {
+		store.dispatch(loadUser());
+	});
+
 	return (
 		<Provider store={store}>
 			<div className="App">
 				<Router>
 					<Navbar />
 					<Switch>
-						<Route path="/home" exact component={Home} />
+						<Route path="/" exact component={Home} />
 						<PrivateRoute path="/trivia" exact component={Trivia} />
 						<PrivateRoute path="/profile" exact component={Profile} />
 						<PrivateRoute path="/contact" exact component={Contact} />
@@ -37,6 +43,6 @@ function App() {
 			</div>
 		</Provider>
 	);
-}
+};
 
 export default App;

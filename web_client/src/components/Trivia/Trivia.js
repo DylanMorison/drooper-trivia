@@ -1,7 +1,13 @@
 import React from "react";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 
-function Trivia() {
+export const Trivia = ({ auth }) => {
 	return <div>Trivia</div>;
-}
+};
 
-export default Trivia;
+const mapStateToProps = (state) => ({
+	auth: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps)(Trivia);
