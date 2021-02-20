@@ -36,7 +36,9 @@ function Navbar({ auth, logout }) {
 				{navLinks.map((item, index) => {
 					return (
 						<Link to={item.link} className="link" onClick={handleClick} key={index}>
-							<li className={item.cName}>{item.title}</li>
+							<li className={item.cName}>
+								{item.title} {item.icon ? item.icon : null}
+							</li>
 						</Link>
 					);
 				})}
