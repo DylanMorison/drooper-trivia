@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { Button } from "../Button";
+import { connect } from "react-redux";
+import { signin, signup } from "../actions/auth";
 import "./authForm.css";
 
-const AuthForm = ({ headerText, errorMessage, onSubmit, signup }) => {
+const AuthForm = ({ headerText, errorMessage, isSignup, signin, signup }) => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
@@ -30,7 +32,7 @@ const AuthForm = ({ headerText, errorMessage, onSubmit, signup }) => {
 							placeholder="Password"
 						/>
 					</div>
-					{signup ? (
+					{isSignup ? (
 						<div>
 							<input
 								type="password"
@@ -41,7 +43,7 @@ const AuthForm = ({ headerText, errorMessage, onSubmit, signup }) => {
 						</div>
 					) : null}
 					<div>
-						<Button onClick={onSubmit}>Submit</Button>
+						<Button onClick={() => {}}>Submit</Button>
 					</div>
 				</form>
 			</div>
@@ -49,4 +51,6 @@ const AuthForm = ({ headerText, errorMessage, onSubmit, signup }) => {
 	);
 };
 
-export default AuthForm;
+const mapStateToProps = (state) => {};
+
+export default conneect(mapStateToProps, { signin, signup })(AuthForm);

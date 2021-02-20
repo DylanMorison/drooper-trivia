@@ -2,11 +2,13 @@ import express from "express";
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 import config from "config";
+import requireAuth from "../middleware/requireAuth.js";
+
 const User = mongoose.model("User");
 
 const router = express.Router();
 
-router.get("/", auth, async (req, res) => {
+router.get("/", requireAuth, async (req, res) => {
 	try {
 		const user = await User.findById(req.user.id).select("-password");
 		res.json(user);
@@ -24,7 +26,7 @@ router.post("/signup", async (req, res) => {
 		await user.save();
 
 		const token = jwt.sign({ userId: user._id }, config.get("jwtSecret"));
-		res.send({ token });
+		res.send({ token, userId: user._id });
 	} catch (error) {
 		console.log(error.message);
 		return res.status(422).send(error.message);
