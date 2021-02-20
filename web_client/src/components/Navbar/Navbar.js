@@ -12,7 +12,6 @@ function Navbar({ auth }) {
 	const [navLinks, setNavLinks] = useState(visitorMenu);
 
 	const navlinkChange = () => {
-		console.log(auth);
 		if (auth) {
 			setNavLinks(authMenu);
 		} else {
@@ -37,12 +36,8 @@ function Navbar({ auth }) {
 			<ul className={clicked ? "nav-menu active" : "nav-menu"}>
 				{navLinks.map((item, index) => {
 					return (
-						<Link to={item.link} className="link" onClick={handleClick}>
-							<li key={index}>
-								<a className={item.cName} href={item.url}>
-									{item.title}
-								</a>
-							</li>
+						<Link to={item.link} className="link" onClick={handleClick} key={index}>
+							<li className={item.cName}>{item.title}</li>
 						</Link>
 					);
 				})}
