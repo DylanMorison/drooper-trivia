@@ -16,7 +16,7 @@ export default (req, res, next) => {
 	const token = jwt_token.replace("Bearer", "");
 	jwt.verify(token, config.get("jwtSecret"), async (err, payload) => {
 		if (err) {
-			return res.status(401).send("You must be logged in");
+			return res.status(401).send("Yo u must be logged in");
 		}
 
 		const { userId } = payload;

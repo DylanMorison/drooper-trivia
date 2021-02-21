@@ -40,12 +40,12 @@ const CompetitorsSchema = new Schema({
 const TriviaSchema = new Schema(
 	{
 		triviaTitle: String,
-		rounds: [RoundSchema],
 		author: {
 			type: Schema.Types.ObjectId,
 			ref: "User",
 			required: true
 		},
+		rounds: [RoundSchema],
 		competitors: [CompetitorsSchema]
 	},
 	{
