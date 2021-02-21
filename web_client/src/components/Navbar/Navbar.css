@@ -10,6 +10,10 @@
 	top: 0;
 }
 
+.activeClassName {
+	border-bottom: 1px solid orange;
+}
+
 .navbar-logo {
 	color: #fff;
 	justify-self: start;

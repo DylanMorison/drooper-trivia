@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { authMenu, visitorMenu } from "./MenuItems";
 import { logout } from "../../actions/auth";
@@ -28,11 +28,11 @@ function Navbar({ auth, logout }) {
 	return (
 		<nav className="NavbarItems">
 			{auth ? (
-				<Link to="/trivia" className="link">
+				<NavLink to="/trivia" className="link">
 					<h1 className="navbar-logo">
 						Drooper Trivia <i className="fas fa-hat-cowboy"></i>
 					</h1>
-				</Link>
+				</NavLink>
 			) : (
 				<Link to="/" className="link">
 					<h1 className="navbar-logo">

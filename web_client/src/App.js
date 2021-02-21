@@ -31,7 +31,9 @@ const App = () => {
 				<Navbar />
 				<Switch>
 					<Route path="/" exact component={Home} />
-					<PrivateRoute path="/trivia" exact component={Trivia} />
+					<Route path="/trivia">
+						<Trivia />
+					</Route>
 					<PrivateRoute path="/profile" exact component={Profile} />
 					<PrivateRoute path="/contact" exact component={Contact} />
 					<Route path="/signin" exact component={signin} />

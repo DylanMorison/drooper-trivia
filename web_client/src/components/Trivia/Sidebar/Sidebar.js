@@ -1,16 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./Sidebar.css";
-import { SidebarData } from "./SidebarData";
+import { sideBarfunc } from "./SidebarData";
 
-const Sidebar = () => {
+const Sidebar = ({ url }) => {
+	let sideBarData = sideBarfunc(url);
+
 	return (
 		<div className="sidebar">
 			<ul className="sidebar-list">
-				<div className="header">
-					<h3>Welcome, username</h3>
+				<div className="sidebar-header">
+					<h3>Welcome</h3>
 				</div>
-				{SidebarData.map((val, key) => {
+				{sideBarData.map((val, key) => {
 					return (
 						<Link to={val.link} className="link">
 							<li key={key}>
