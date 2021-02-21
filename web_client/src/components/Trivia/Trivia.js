@@ -1,13 +1,23 @@
 import React from "react";
-import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
+import SideBar from "./Sidebar/Sidebar";
+import { Route } from "react-router-dom";
+import "./Trivia.css";
 
-export const Trivia = ({ auth }) => {
-	return <div>Trivia</div>;
-};
+function Trivia() {
+	return (
+		<>
+			<div className="trivia-container">
+				<div className="sidebar-left">
+					<SideBar />
+				</div>
 
-const mapStateToProps = (state) => ({
-	auth: state.auth.isAuthenticated
-});
+				<div className="main">
+					<h1>main</h1>
+				</div>
+				<div className="sidebar-right"></div>
+			</div>
+		</>
+	);
+}
 
-export default connect(mapStateToProps)(Trivia);
+export default Trivia;

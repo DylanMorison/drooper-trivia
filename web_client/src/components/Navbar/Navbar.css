@@ -6,6 +6,8 @@
 	align-items: center;
 	font-size: 1.2rem;
 	white-space: nowrap;
+	position: sticky;
+	top: 0;
 }
 
 .navbar-logo {
@@ -63,8 +65,14 @@
 }
 
 @media screen and (max-width: 960px) {
+	nav {
+		position: fixed;
+		width: 100%;
+	}
 	.NavbarItems {
 		position: relative;
+		position: sticky;
+		top: 0;
 	}
 
 	.nav-menu {
@@ -101,9 +109,12 @@
 	.navbar-logo {
 		position: absolute;
 		left: 0;
+		top: 0;
+		margin-top: 13px;
 	}
 
 	.menu-icon {
+		margin-top: -5px;
 		display: block;
 		position: absolute;
 		top: 0;

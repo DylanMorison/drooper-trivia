@@ -37,19 +37,21 @@ const CompetitorsSchema = new Schema({
 	}
 });
 
-const TriviaSchema = new Schema({
-	numRounds: {
-		type: Number,
-		default: 0
+const TriviaSchema = new Schema(
+	{
+		triviaTitle: String,
+		rounds: [RoundSchema],
+		author: {
+			type: Schema.Types.ObjectId,
+			ref: "User",
+			required: true
+		},
+		competitors: [CompetitorsSchema]
 	},
-	rounds: [RoundSchema],
-	author: {
-		type: Schema.Types.ObjectId,
-		ref: "User",
-		required: true
-	},
-	competitors: [CompetitorsSchema]
-});
+	{
+		timestamps: true
+	}
+);
 
 TriviaSchema.methods.removeCompetitor = function (newCompetitorId) {
 	const currentTrivia = this;

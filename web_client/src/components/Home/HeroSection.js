@@ -11,13 +11,13 @@ function HeroSection() {
 			<div className="hero-btns">
 				<Link to="/signin">
 					<Button className="btns" buttonStyle="btn--primary" buttonSize="btn--large">
-						Log In
+						Login
 					</Button>
 				</Link>
 
 				<Link to="/signup">
 					<Button className="btns" buttonStyle="btn--primary" buttonSize="btn--large">
-						Create an Account
+						Signup
 					</Button>
 				</Link>
 			</div>

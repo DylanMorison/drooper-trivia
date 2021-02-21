@@ -27,20 +27,18 @@ const App = () => {
 
 	return (
 		<Provider store={store}>
-			<div className="App">
-				<Router>
-					<Navbar />
-					<Switch>
-						<Route path="/" exact component={Home} />
-						<PrivateRoute path="/trivia" exact component={Trivia} />
-						<PrivateRoute path="/profile" exact component={Profile} />
-						<PrivateRoute path="/contact" exact component={Contact} />
-						<Route path="/signin" exact component={signin} />
-						<Route path="/signup" exact component={signup} />
-						<Route path="/logout" exact component={logout} />
-					</Switch>
-				</Router>
-			</div>
+			<Router>
+				<Navbar />
+				<Switch>
+					<Route path="/" exact component={Home} />
+					<PrivateRoute path="/trivia" exact component={Trivia} />
+					<PrivateRoute path="/profile" exact component={Profile} />
+					<PrivateRoute path="/contact" exact component={Contact} />
+					<Route path="/signin" exact component={signin} />
+					<Route path="/signup" exact component={signup} />
+					<Route path="/logout" exact component={logout} />
+				</Switch>
+			</Router>
 		</Provider>
 	);
 };

@@ -29,10 +29,10 @@ router.get("/triv-by-id", requireAuth, async (req, res) => {
 router.post("/create", requireAuth, async (req, res) => {
 	const user = req.user;
 
-	const { numRounds } = req.body;
+	const { triviaTitle } = req.body;
 
 	try {
-		await new Trivia({ numRounds, author: user._id }).save((err, doc) => {
+		await new Trivia({ triviaTitle, author: user._id }).save((err, doc) => {
 			if (err) return res.status(400).send(err.message);
 			res.send(doc);
 		});
