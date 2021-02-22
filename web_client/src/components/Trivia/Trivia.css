@@ -1,31 +1,78 @@
-.header {
-	grid-area: header;
-	background-color: rgb(255, 255, 255);
-	box-shadow: 0px 0px 1px #4396e4;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+@media (min-width: 801px) {
+	.header {
+		grid-area: header;
+		background-color: rgb(255, 255, 255);
+		box-shadow: 0px 0px 1px #4396e4;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.main {
+		grid-area: main;
+		background-color: rgba(248, 246, 246, 0.911);
+		box-shadow: 0px 0px 1px #4396e4;
+	}
+
+	.cards-container {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: left;
+		align-content: space-around;
+	}
+
+	.sidebar-left {
+		grid-area: sidebar-left;
+	}
+	.sidebar-right {
+		grid-area: sidebar-right;
+		box-shadow: 0px 1px 2px #4396e4;
+	}
+
+	.trivia-container {
+		height: 90vh;
+		display: grid;
+		background-color: #d4d4d4a1;
+		grid-template-columns: 1fr 4fr 1fr;
+		grid-template-rows: 1fr 5fr;
+		grid-template-areas:
+			"sidebar-left header sidebar-right"
+			"sidebar-left main sidebar-right";
+	}
 }
 
-.header img {
-}
+@media (max-width: 800px) {
+	.cards-container {
+		flex-direction: column;
+		align-items: center;
+		flex: 100%;
+	}
 
-.main {
-	grid-area: main;
-	background-color: rgba(248, 246, 246, 0.911);
-	box-shadow: 0px 0px 1px #4396e4;
-}
-.sidebar-left {
-	grid-area: sidebar-left;
-}
+	.header {
+		grid-area: header;
+		background-color: rgb(255, 255, 255);
+		box-shadow: 0px 0px 1px #4396e4;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
 
-.trivia-container {
-	height: 90vh;
-	display: grid;
-	background-color: #d4d4d4a1;
-	grid-template-columns: 1fr 4fr;
-	grid-template-rows: 1fr 5fr;
-	grid-template-areas:
-		"sidebar-left header"
-		"sidebar-left main";
+	.main {
+		grid-area: main;
+		background-color: rgba(248, 246, 246, 0.911);
+		box-shadow: 0px 0px 1px #4396e4;
+	}
+
+	.sidebar-left {
+		display: none;
+	}
+
+	.trivia-container {
+		height: 90vh;
+		display: grid;
+		background-color: #d4d4d4a1;
+		grid-template-columns: 1fr;
+		grid-template-rows: 0.2fr 2fr;
+		grid-template-areas: "header" "main";
+	}
 }

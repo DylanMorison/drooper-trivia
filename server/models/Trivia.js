@@ -22,12 +22,10 @@ const RoundSchema = new Schema({
 
 const CompetitorsSchema = new Schema({
 	competitorID: {
-		type: String,
-		unique: true
+		type: String
 	},
 	username: {
 		type: String,
-		unique: true,
 		default: "Competitor"
 	},
 	score: {

@@ -6,8 +6,6 @@ import { logout } from "../../actions/auth";
 import "./Navbar.css";
 
 function Navbar({ auth, logout }) {
-	console.log(auth);
-
 	const [clicked, setClicked] = useState(false);
 	const [navLinks, setNavLinks] = useState(visitorMenu);
 

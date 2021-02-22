@@ -9,9 +9,7 @@ const Sidebar = ({ url }) => {
 	return (
 		<div className="sidebar">
 			<ul className="sidebar-list">
-				<div className="sidebar-header">
-					<h3>Welcome</h3>
-				</div>
+				<div className="sidebar-header"></div>
 				{sideBarData.map((val, key) => {
 					return (
 						<Link to={val.link} className="link">

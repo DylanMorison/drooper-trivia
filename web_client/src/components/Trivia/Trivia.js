@@ -1,16 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import SideBar from "./Sidebar/Sidebar";
 import { useRouteMatch, Link, Route, Switch, Redirect } from "react-router-dom";
 import Home from "./Trivia-Home/Home";
 import pic from "./header-pic.png";
+import { fetchAllTrivias } from "../../actions/trivia";
+import TriviaCard from "./TriviaCard";
 import "./Trivia.css";
 
-/**
- * When a user clicks on a trivia. They are taken to
- */
+function Trivia({ auth, userId, trivias, fetchAllTrivias }) {
+	useEffect(() => fetchAllTrivias(userId), []);
 
-function Trivia({ auth }) {
 	let { path, url } = useRouteMatch();
 
 	if (!auth) {
@@ -24,10 +24,25 @@ function Trivia({ auth }) {
 					<SideBar url={url} />
 				</div>
 
-				<div className="main"></div>
+				<div className="main">
+					<ul className="cards-container">
+						{trivias.map((triv, index) => {
+							return (
+								<TriviaCard
+									triviaTitle={triv.triviaTitle}
+									roundLength={triv.rounds.length}
+									playerLength={triv.competitors.length}
+									createdAt={triv.createdAt}
+									keyName={index}
+								/>
+							);
+						})}
+					</ul>
+				</div>
 				<div className="header">
 					<img src={pic} alt="Logo" className="header-img" />
 				</div>
+				<div className="sidebar-right"></div>
 			</div>
 
 			<Switch>
@@ -40,6 +55,10 @@ function Trivia({ auth }) {
 	);
 }
 
-const mapStateToProps = (state) => ({ auth: state.auth.isAuthenticated });
+const mapStateToProps = (state) => ({
+	auth: state.auth.isAuthenticated,
+	userId: state.auth.userId,
+	trivias: state.userTrivias
+});
 
-export default connect(mapStateToProps)(Trivia);
+export default connect(mapStateToProps, { fetchAllTrivias })(Trivia);
