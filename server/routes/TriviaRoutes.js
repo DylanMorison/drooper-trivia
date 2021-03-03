@@ -10,10 +10,21 @@ const router = express.Router();
 router.get("/all-trivs-by-user", requireAuth, async (req, res) => {
 	const user = req.user;
 
-	await Trivia.find({ author: user._id }, (err, docs) => {
-		if (err) return res.status(400).send(err.message);
-		res.send(docs);
-	});
+	try {
+		const trivias = await Trivia.find({ author: user._id }).sort({ createdAt: -1 });
+		res.send(trivias);
+	} catch (err) {
+		return res.status(400).send(err.message);
+	}
+
+	// await Trivia.find(
+	// 	{ author: user._id },
+	// 	{ sort: { updatedAt: "asc" } },
+	// 	(err, docs) => {
+	// 		if (err) return res.status(400).send(err.message);
+	// 		res.send(docs);
+	// 	}
+	// );
 });
 
 router.get("/triv-by-id", requireAuth, async (req, res) => {
@@ -29,7 +40,7 @@ router.get("/triv-by-id", requireAuth, async (req, res) => {
 router.post("/create", requireAuth, async (req, res) => {
 	const user = req.user;
 
-	const { triviaTitle } = req.body;
+	const triviaTitle = req.body.title;
 
 	try {
 		await new Trivia({ triviaTitle, author: user._id }).save((err, doc) => {
@@ -43,7 +54,14 @@ router.post("/create", requireAuth, async (req, res) => {
 
 router.post("/round/create", requireAuth, anserTypeCheck, async (req, res) => {
 	const user = req.user;
-	const { triviaID, roundTitle, answerType, numQuestions, questions, answers } = req.body;
+	const {
+		triviaID,
+		roundTitle,
+		answerType,
+		numQuestions,
+		questions,
+		answers
+	} = req.body;
 
 	try {
 		const currentTrivia = await Trivia.findOne({ _id: triviaID, author: user._id });

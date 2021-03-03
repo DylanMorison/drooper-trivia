@@ -6,6 +6,8 @@ export default function (state = [], action) {
 	switch (type) {
 		case FETCH_TRIVIAS:
 			return payload;
+		case CREATE_TRIVIA:
+			return [payload, ...state];
 		default:
 			return state;
 	}

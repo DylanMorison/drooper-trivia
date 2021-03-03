@@ -1,21 +1,5 @@
-.sidebar {
-	background-color: rgb(255, 255, 255);
-	height: 100%;
-	box-shadow: 3px 1px 2px #4396e4;
-}
-
-.sidebar-header {
-	padding: 25px 0px;
-	display: grid;
-	place-items: center;
-	border-bottom: 2px solid rgba(0, 174, 255, 0.137);
-	margin-bottom: 25px;
-}
-
 .sidebar-list {
-	height: auto;
-	width: 100%;
-	padding: 0;
+
 }
 
 .sidebar-list .link {
@@ -34,7 +18,7 @@
 }
 
 .sidebar-list li:hover {
-	background-color: rgba(255, 115, 0, 0.712);
+	background-color: rgba(0, 153, 255, 0.582);
 }
 
 .sidebar-list li #icon {
