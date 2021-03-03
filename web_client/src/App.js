@@ -36,9 +36,9 @@ const App = () => {
 					</Route>
 					<PrivateRoute path="/profile" exact component={Profile} />
 					<PrivateRoute path="/contact" exact component={Contact} />
-					<Route path="/signin" exact component={signin} />
-					<Route path="/signup" exact component={signup} />
-					<Route path="/logout" exact component={logout} />
+					<Route path="/signin" component={signin} />
+					<Route path="/signup" component={signup} />
+					<Route path="/logout" component={logout} />
 				</Switch>
 			</Router>
 		</Provider>
