@@ -46,7 +46,9 @@ h3 {
 
 @media (max-width: 800px) {
 	.card {
-		margin: 20px 60px;
+		width: 149px;
 		padding: 30px 0px;
 	}
+
+
 }

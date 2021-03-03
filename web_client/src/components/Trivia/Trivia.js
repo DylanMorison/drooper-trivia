@@ -5,20 +5,14 @@ import { fetchAllTrivias } from "../../actions/trivia";
 import Button from "@material-ui/core/Button";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import { makeStyles } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 import SideBar from "./Sidebar/Sidebar";
 import TriviaCard from "./TriviaCard";
 import CreateTrivDialog from "./CreateTrivDialog";
 import "./Trivia.css";
 
-const useStyles = makeStyles((theme) => ({
-	btn: {
-		position: "fixed",
-		bottom: "22px",
-		right: "22px",
-		fontSize: 19
-	}
-}));
+const useStyles = makeStyles((theme) => ({}));
 
 function Trivia({ auth, userId, trivias, fetchAllTrivias }) {
 	const classes = useStyles();
@@ -46,22 +40,24 @@ function Trivia({ auth, userId, trivias, fetchAllTrivias }) {
 			<div className="left">
 				<SideBar url={url} />
 			</div>
+			<div className="footer">
+				<Button
+					color="secondary"
+					variant="contained"
+					onClick={handleClickOpen}
+					color="secondary"
+					startIcon={<AddCircleOutlineIcon />}
+					className={classes.btn}
+					size="large"
+					onClick={handleClickOpen}
+				>
+					New Trivia
+				</Button>
+			</div>
 
 			<Switch>
 				<Route exact path={path}>
 					<div className="right">
-						<Button
-							color="secondary"
-							variant="contained"
-							onClick={handleClickOpen}
-							color="secondary"
-							startIcon={<AddCircleOutlineIcon />}
-							className={classes.btn}
-							size="large"
-							onClick={handleClickOpen}
-						>
-							New Trivia
-						</Button>
 						<CreateTrivDialog open={open} handleClose={handleClose} />
 						<ul className="cards">
 							{trivias.map((triv, index) => {
