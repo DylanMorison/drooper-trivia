@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "../Button";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import { signin, signup } from "../../actions/auth";
 import submitForm from "./submitForm";
 import "./authForm.css";
@@ -75,6 +75,16 @@ const AuthForm = ({ headerText, isSignup, signin, isAuthenticated }) => {
 							Submit
 						</Button>
 					</div>
+
+					{isSignup ? (
+						<Link to="/signin">
+							<a href="#">Already signed up?</a>
+						</Link>
+					) : (
+						<Link to="/reset-password">
+							<a href="#">Forot Password?</a>
+						</Link>
+					)}
 				</form>
 			</div>
 		</div>

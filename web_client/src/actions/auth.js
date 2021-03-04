@@ -1,6 +1,8 @@
-import { SIGNIN, LOGOUT, SIGNUP, LOAD_USER } from "./types";
+import { SIGNIN, LOGOUT, SIGNUP, LOAD_USER, PASSWORD_REST } from "./types";
 import axios from "axios";
 import setJwtToken from "../utils/setJwtToken";
+
+const url = "http://localhost:5000/api/auth/";
 
 export const loadUser = () => async (dispatch) => {
 	if (localStorage.jwt_token) {
@@ -8,7 +10,7 @@ export const loadUser = () => async (dispatch) => {
 	}
 
 	try {
-		const res = await axios.get("http://localhost:5000/api/auth/");
+		const res = await axios.get(url);
 		dispatch({ type: LOAD_USER, payload: res.data });
 	} catch (err) {
 		console.log(err.msg);
@@ -16,7 +18,7 @@ export const loadUser = () => async (dispatch) => {
 };
 
 export const signin = (email, password) => async (dispatch) => {
-	const res = await axios.post("http://localhost:5000/api/auth/signin", {
+	const res = await axios.post(`${url}signin`, {
 		email,
 		password
 	});
@@ -25,7 +27,7 @@ export const signin = (email, password) => async (dispatch) => {
 };
 
 export const signup = (email, password) => async (dispatch) => {
-	const res = await axios.post("http://localhost:5000/api/auth/signup", {
+	const res = await axios.post(`${url}signup`, {
 		email,
 		password
 	});
@@ -36,5 +38,14 @@ export const signup = (email, password) => async (dispatch) => {
 export const logout = () => (dispatch) => {
 	dispatch({
 		type: LOGOUT
+	});
+};
+
+export const resetEmail = (email) => (dispatch) => {
+	const res = axios.post(`${url}password-reset`, { email });
+
+	dispatch({
+		type: PASSWORD_REST,
+		payload: res.data
 	});
 };

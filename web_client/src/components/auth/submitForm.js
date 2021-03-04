@@ -20,3 +20,16 @@ export default function (email, password, callback, setError, confirmPassword = 
 
 	callback(email, password);
 }
+
+export const emailVerification = (email, setError) => {
+	const emailIsValid = (testEmail) => {
+		return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(testEmail);
+	};
+
+	if (!emailIsValid(email)) {
+		setError("Invalid Email");
+		return;
+	}
+
+	setError("validEmail");
+};

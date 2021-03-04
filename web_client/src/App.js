@@ -9,6 +9,8 @@ import Contact from "./components/Contact/Contact";
 import signin from "./components/auth/signin";
 import signup from "./components/auth/signup";
 import logout from "./components/auth/logout";
+import NewPassword from "./components/auth/NewPassword";
+import ResetPassword from "./components/auth/resetPassword";
 import store from "./store";
 import setJwtToken from "./utils/setJwtToken";
 import PrivateRoute from "./components/routing/PrivateRoute";
@@ -39,6 +41,8 @@ const App = () => {
 					<Route path="/signin" component={signin} />
 					<Route path="/signup" component={signup} />
 					<Route path="/logout" component={logout} />
+					<Route path="/new-password" component={NewPassword} />
+					<Route path="/reset-password" component={ResetPassword} />
 				</Switch>
 			</Router>
 		</Provider>

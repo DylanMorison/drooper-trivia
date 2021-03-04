@@ -2,6 +2,7 @@ import "./models/Users.js";
 import "./models/Trivia.js";
 import express from "express";
 import cors from "cors";
+import morgan from "morgan";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import trivRoutes from "./routes/triviaRoutes.js";
@@ -10,10 +11,10 @@ import userRoutes from "./routes/UserRoutes.js";
 connectDB();
 
 const app = express();
-const jsonNoExtended = express.json({ extended: false });
 
-app.use(jsonNoExtended);
+app.use(express.json({ extended: false }));
 app.use(cors());
+app.use(morgan("tiny"));
 app.use("/api/auth", authRoutes);
 app.use("/api/triv", trivRoutes);
 app.use("/api/users", userRoutes);
