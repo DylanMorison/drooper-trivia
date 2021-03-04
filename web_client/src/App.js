@@ -27,6 +27,12 @@ const App = () => {
 		store.dispatch(loadUser());
 	}, []);
 
+	if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
+		console.log("dev!!");
+	} else {
+		console.log("prod!!!");
+	}
+
 	return (
 		<Provider store={store}>
 			<Router>

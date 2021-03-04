@@ -18,6 +18,8 @@ export default function (email, password, callback, setError, confirmPassword = 
 		return;
 	}
 
+	debugger;
+
 	callback(email, password);
 }
 

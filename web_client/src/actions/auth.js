@@ -1,8 +1,11 @@
 import { SIGNIN, LOGOUT, SIGNUP, LOAD_USER, PASSWORD_RESET_CODE } from "./types";
 import axios from "axios";
 import setJwtToken from "../utils/setJwtToken";
+import { urlSetter } from "../utils/urls";
 
-const url = "http://localhost:5000/api/auth/";
+const baseUrl = urlSetter();
+
+const url = baseUrl.backEndURL + "/auth";
 
 export const loadUser = () => async (dispatch) => {
 	if (localStorage.jwt_token) {
@@ -18,7 +21,9 @@ export const loadUser = () => async (dispatch) => {
 };
 
 export const signin = (email, password) => async (dispatch) => {
-	const res = await axios.post(`${url}signin`, {
+	debugger;
+
+	const res = await axios.post(`${url}/signin`, {
 		email,
 		password
 	});
@@ -27,7 +32,9 @@ export const signin = (email, password) => async (dispatch) => {
 };
 
 export const signup = (email, password) => async (dispatch) => {
-	const res = await axios.post(`${url}signup`, {
+	debugger;
+
+	const res = await axios.post(`${url}/signup`, {
 		email,
 		password
 	});
@@ -42,7 +49,7 @@ export const logout = () => (dispatch) => {
 };
 
 export const getResetCode = (email) => async (dispatch) => {
-	const res = await axios.post(`${url}password-reset-code`, { email });
+	const res = await axios.post(`${url}/password-reset-code`, { email });
 	debugger;
 	dispatch({
 		type: PASSWORD_RESET_CODE,

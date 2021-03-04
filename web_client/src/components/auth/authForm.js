@@ -6,7 +6,7 @@ import { signin, signup } from "../../actions/auth";
 import submitForm from "./submitForm";
 import "./authForm.css";
 
-const AuthForm = ({ headerText, isSignup, signin, isAuthenticated }) => {
+const AuthForm = ({ headerText, isSignup, signin, isAuthenticated, signup }) => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
@@ -15,6 +15,14 @@ const AuthForm = ({ headerText, isSignup, signin, isAuthenticated }) => {
 	if (isAuthenticated) {
 		return <Redirect to="/trivia" />;
 	}
+
+	const callback = (email, password) => {
+		if (isSignup) {
+			signup(email, password);
+		} else {
+			signin(email, password);
+		}
+	};
 
 	return (
 		<div className="authform">
@@ -69,7 +77,7 @@ const AuthForm = ({ headerText, isSignup, signin, isAuthenticated }) => {
 						<Button
 							onClick={(e) => {
 								e.preventDefault();
-								submitForm(email, password, signin, setError, confirmPassword);
+								submitForm(email, password, callback, setError, confirmPassword);
 							}}
 						>
 							Submit
