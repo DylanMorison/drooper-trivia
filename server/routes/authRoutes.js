@@ -63,7 +63,7 @@ router.post("/signin", async (req, res) => {
 
 		res.send({ token, userId: user._id, isVerified: user.isVerified });
 	} catch (error) {
-		return res.status(422).send({ error: "Invalid Password or Email" });
+		return res.status(422).send({ error: error.message });
 	}
 });
 

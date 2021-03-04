@@ -7,6 +7,8 @@ const baseUrl = urlSetter();
 
 const url = baseUrl.backEndURL + "/auth";
 
+console.log("url: ", url);
+
 export const loadUser = () => async (dispatch) => {
 	if (localStorage.jwt_token) {
 		setJwtToken(localStorage.jwt_token);
