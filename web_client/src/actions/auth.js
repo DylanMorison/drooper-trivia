@@ -15,6 +15,7 @@ export const loadUser = () => async (dispatch) => {
 	}
 
 	try {
+		debugger;
 		const res = await axios.get(url);
 		dispatch({ type: LOAD_USER, payload: res.data });
 	} catch (err) {
