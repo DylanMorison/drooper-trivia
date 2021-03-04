@@ -9,7 +9,7 @@ import Contact from "./components/Contact/Contact";
 import signin from "./components/auth/signin";
 import signup from "./components/auth/signup";
 import logout from "./components/auth/logout";
-import NewPassword from "./components/auth/NewPassword";
+import CodeVerification from "./components/auth/CodeVerification";
 import ResetPassword from "./components/auth/resetPassword";
 import store from "./store";
 import setJwtToken from "./utils/setJwtToken";
@@ -41,7 +41,7 @@ const App = () => {
 					<Route path="/signin" component={signin} />
 					<Route path="/signup" component={signup} />
 					<Route path="/logout" component={logout} />
-					<Route path="/new-password" component={NewPassword} />
+					<Route path="/code-verification" component={CodeVerification} />
 					<Route path="/reset-password" component={ResetPassword} />
 				</Switch>
 			</Router>

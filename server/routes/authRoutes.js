@@ -83,7 +83,7 @@ router.get("/verify-email", async (req, res) => {
 });
 
 // reset password
-router.post("/password-reset", async (req, res) => {
+router.post("/password-reset-code", async (req, res) => {
 	const { email } = req.body;
 
 	try {

@@ -1,4 +1,4 @@
-import { SIGNIN, LOGOUT, SIGNUP, LOAD_USER, PASSWORD_REST } from "./types";
+import { SIGNIN, LOGOUT, SIGNUP, LOAD_USER, PASSWORD_RESET_CODE } from "./types";
 import axios from "axios";
 import setJwtToken from "../utils/setJwtToken";
 
@@ -41,11 +41,11 @@ export const logout = () => (dispatch) => {
 	});
 };
 
-export const resetEmail = (email) => (dispatch) => {
-	const res = axios.post(`${url}password-reset`, { email });
-
+export const getResetCode = (email) => async (dispatch) => {
+	const res = await axios.post(`${url}password-reset-code`, { email });
+	debugger;
 	dispatch({
-		type: PASSWORD_REST,
+		type: PASSWORD_RESET_CODE,
 		payload: res.data
 	});
 };

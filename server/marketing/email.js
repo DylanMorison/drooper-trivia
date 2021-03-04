@@ -35,7 +35,12 @@ export const passwordReset = async (email, code) => {
 		text: `<h1>${code}</h1>
            `,
 		html: `<h1>${code}</h1>
-        
-          `
+					 <a href="${url}/new-password">Click here to reset your password!</a>`
 	};
+
+	try {
+		await sgMail.send(message);
+	} catch (err) {
+		console.log(err);
+	}
 };

@@ -3,14 +3,18 @@ import { connect } from "react-redux";
 import { Button } from "../Button";
 import { Redirect, Link } from "react-router-dom";
 import { emailVerification } from "./submitForm";
+import { getResetCode } from "../../actions/auth";
 
 import "./authForm.css";
 
-export const ResetPassword = (props) => {
+export const ResetPassword = ({ getResetCode }) => {
 	const [email, setEmail] = useState("");
 	const [error, setError] = useState(null);
 
-	if (error === "validEmail") return <Redirect to="/new-password" />;
+	if (error === "validEmail") {
+		getResetCode(email);
+		return <Redirect to="/code-verification" />;
+	}
 
 	return (
 		<div className="authform">
@@ -54,6 +58,4 @@ export const ResetPassword = (props) => {
 
 const mapStateToProps = (state) => ({});
 
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ResetPassword);
+export default connect(mapStateToProps, { getResetCode })(ResetPassword);
