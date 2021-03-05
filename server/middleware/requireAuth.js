@@ -5,19 +5,19 @@ import config from "config";
 const User = mongoose.model("User");
 
 export default (req, res, next) => {
-	console.log("jwt_token: ", req.get("jwt_token"));
+	console.log("Authorization: ", req.get("Authorization"));
 	console.log("___________________________________");
-	console.log(req.headers);
 
-	const { jwt_token } = req.headers;
+	const { authorization } = req.headers;
 
-	if (!jwt_token) {
+	if (!authorization) {
+		console.log("No authorization Header :(");
 		return res.status(401).send({ error: "You must be logged in!" });
 	}
 
 	// jwt_token === 'Bearer dlsfdskljsdkfj4389fhsjdehf'
 
-	const token = jwt_token.replace("Bearer", "");
+	const token = authorization.replace("Bearer ", "");
 	jwt.verify(token, config.get("jwtSecret"), async (err, payload) => {
 		if (err) {
 			return res.status(401).send("Yo u must be logged in");
@@ -26,6 +26,7 @@ export default (req, res, next) => {
 		const { userId } = payload;
 
 		const user = await User.findById(userId);
+		console.log(user);
 		req.user = user;
 		next();
 	});

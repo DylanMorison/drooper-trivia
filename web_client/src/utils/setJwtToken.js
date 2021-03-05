@@ -1,11 +1,11 @@
-import axios from "axios";
+// import axios from "axios";
 
-const setJwtToken = (token) => {
-	if (token) {
-		axios.defaults.headers.common["jwt_token"] = token;
-	} else {
-		delete axios.defaults.headers.common["jwt_token"];
-	}
-};
+// const setJwtToken = (token) => {
+// 	if (token) {
+// 		axios.defaults.headers.common["jwt_token"] = token;
+// 	} else {
+// 		delete axios.defaults.headers.common["jwt_token"];
+// 	}
+// };
 
-export default setJwtToken;
+// export default setJwtToken;

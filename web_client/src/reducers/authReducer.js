@@ -4,7 +4,6 @@ const initialState = {
 	isAuthenticated: false,
 	userId: null,
 	loading: true,
-	token: localStorage.getItem("jwt_token"),
 	isVerified: false
 };
 
@@ -22,10 +21,10 @@ export default function (state = initialState, action) {
 		case SIGNIN:
 		case SIGNUP:
 			const { token, userId, isVerified } = payload;
-			localStorage.setItem("jwt_token", token);
+			localStorage.setItem("Authorization", "Bearer " + token);
 			return { ...state, userId, isAuthenticated: true, loading: false, isVerified };
 		case LOGOUT:
-			localStorage.removeItem("jwt_token");
+			localStorage.removeItem("Authorization");
 			return {
 				...state,
 				isAuthenticated: false,

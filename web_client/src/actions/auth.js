@@ -1,17 +1,17 @@
 import { SIGNIN, LOGOUT, SIGNUP, LOAD_USER, PASSWORD_RESET_CODE } from "./types";
 import axios from "axios";
-import setJwtToken from "../utils/setJwtToken";
+// import setJwtToken from "../utils/setJwtToken";
 import { urlSetter } from "../utils/urls";
-import {} from "../utils/configObject";
+import { getConfigObj } from "../utils/configObject";
 
 const baseUrl = urlSetter();
 
 const url = baseUrl.backEndURL + "/auth";
 
 export const loadUser = () => async (dispatch) => {
-	if (localStorage.jwt_token) {
-		setJwtToken(localStorage.jwt_token);
-	}
+	// if (localStorage.Authorization) {
+	// 	setJwtToken(localStorage.Authorization);
+	// }
 
 	const config = getConfigObj("get", "/auth");
 

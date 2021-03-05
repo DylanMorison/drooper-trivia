@@ -22,7 +22,7 @@ export const getConfigObj = (method, endpoint, data = null) => {
 		url: backEndUrl + endpoint,
 		headers: {
 			"Content-Type": "application/json",
-			jwt_token: localStorage.getItem("jwt_token")
+			Authorization: localStorage.getItem("Authorization")
 		},
 		data: JSON.stringify(data)
 	};
