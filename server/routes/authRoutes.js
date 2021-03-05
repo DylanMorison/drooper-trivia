@@ -15,7 +15,7 @@ router.get("/", requireAuth, async (req, res) => {
 		const user = await User.findById(req.user.id).select("-password");
 		res.json(user);
 	} catch (err) {
-		console.error(err.message);
+		console.error(err);
 		res.status(500).send("Server Error");
 	}
 });
@@ -37,9 +37,9 @@ router.post("/signup", async (req, res) => {
 
 		const token = jwt.sign({ userId: user._id }, config.get("jwtSecret"));
 		res.send({ token, userId: user._id, isVerified });
-	} catch (error) {
-		console.log(error.message);
-		return res.status(422).send(error.message);
+	} catch (err) {
+		console.log(err.message);
+		return res.status(422).send(err.message);
 	}
 });
 
@@ -64,8 +64,9 @@ router.post("/signin", async (req, res) => {
 		const token = jwt.sign({ userId: user._id }, config.get("jwtSecret"));
 
 		res.send({ token, userId: user._id, isVerified: user.isVerified });
-	} catch (error) {
-		return res.status(422).send({ error: error.message });
+	} catch (err) {
+		console.log(err);
+		return res.status(422).send({ err: err.message });
 	}
 });
 
