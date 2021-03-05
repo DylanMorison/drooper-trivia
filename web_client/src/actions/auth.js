@@ -2,7 +2,7 @@ import { SIGNIN, LOGOUT, SIGNUP, LOAD_USER, PASSWORD_RESET_CODE } from "./types"
 import axios from "axios";
 import setJwtToken from "../utils/setJwtToken";
 import { urlSetter } from "../utils/urls";
-import { getConfigObj } from "../utils/configObject";
+import {} from "../utils/configObject";
 
 const baseUrl = urlSetter();
 
