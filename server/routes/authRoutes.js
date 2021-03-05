@@ -46,6 +46,8 @@ router.post("/signup", async (req, res) => {
 router.post("/signin", async (req, res) => {
 	const { email, password } = req.body;
 
+	console.log("testing!");
+
 	if (!email || !password) {
 		return res.status(422).send({ error: "Missing Email or Password" });
 	}
