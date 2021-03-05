@@ -5,7 +5,7 @@ import config from "config";
 const User = mongoose.model("User");
 
 export default (req, res, next) => {
-	console.log(req.headers);
+	console.log("middleware/requireAuth.js:", req.headers);
 	const { jwt_token } = req.headers;
 
 	if (!jwt_token) {
