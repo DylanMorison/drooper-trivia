@@ -46,8 +46,6 @@ router.post("/signup", async (req, res) => {
 router.post("/signin", async (req, res) => {
 	const { email, password } = req.body;
 
-	console.log("testing!");
-
 	if (!email || !password) {
 		return res.status(422).send({ error: "Missing Email or Password" });
 	}
@@ -56,7 +54,7 @@ router.post("/signin", async (req, res) => {
 		const user = await User.findOne({ email });
 
 		if (!user) {
-			return res.status(402).send({ error: "Email Not Found" });
+			return res.status(404).send({ error: "Email Not Found" });
 		}
 
 		await user.comparePassword(password);
