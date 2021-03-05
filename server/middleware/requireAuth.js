@@ -5,7 +5,8 @@ import config from "config";
 const User = mongoose.model("User");
 
 export default (req, res, next) => {
-	console.log(req.headers);
+	console.log(req.get("jwt_token"));
+
 	const { jwt_token } = req.headers;
 
 	if (!jwt_token) {
