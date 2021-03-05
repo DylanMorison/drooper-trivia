@@ -1,31 +1,36 @@
 import mongoose from "mongoose";
 import bycrpt from "bcrypt";
 
-const UserSchema = new mongoose.Schema({
-	email: {
-		type: String,
-		unique: true,
-		required: true
+const UserSchema = new mongoose.Schema(
+	{
+		email: {
+			type: String,
+			unique: true,
+			required: true
+		},
+		emailToken: String,
+		isVerified: Boolean,
+		password: {
+			type: String,
+			required: true
+		},
+		numTrivsCreated: {
+			type: Number,
+			default: 0
+		},
+		numTrivsCompeted: {
+			type: Number,
+			default: 0
+		},
+		numTrivsWon: {
+			type: Number,
+			default: 0
+		}
 	},
-	emailToken: String,
-	isVerified: Boolean,
-	password: {
-		type: String,
-		required: true
-	},
-	numTrivsCreated: {
-		type: Number,
-		default: 0
-	},
-	numTrivsCompeted: {
-		type: Number,
-		default: 0
-	},
-	numTrivsWon: {
-		type: Number,
-		default: 0
+	{
+		timestamps: true
 	}
-});
+);
 
 UserSchema.pre("save", function (next) {
 	const user = this;

@@ -36,7 +36,7 @@ router.post("/signup", async (req, res) => {
 		await user.save();
 
 		const token = jwt.sign({ userId: user._id }, config.get("jwtSecret"));
-		res.send({ token, userId: user._id, isVerified });
+		res.send({ token, userId: user._id, isVerified: false });
 	} catch (err) {
 		console.log(err.message);
 		return res.status(422).send(err.message);

@@ -12,15 +12,9 @@ import logout from "./components/auth/logout";
 import CodeVerification from "./components/auth/CodeVerification";
 import ResetPassword from "./components/auth/resetPassword";
 import store from "./store";
-import setJwtToken from "./utils/setJwtToken";
 import PrivateRoute from "./components/routing/PrivateRoute";
 import { loadUser } from "./actions/auth";
-
 import "./App.css";
-
-if (localStorage.jwt_token) {
-	setJwtToken(localStorage.jwt_token);
-}
 
 const App = () => {
 	useEffect(() => {
