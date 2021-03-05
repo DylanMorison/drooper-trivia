@@ -12,7 +12,6 @@ const router = express.Router();
 
 router.get("/", requireAuth, async (req, res) => {
 	try {
-		console.log(req);
 		const user = await User.findById(req.user.id).select("-password");
 		res.json(user);
 	} catch (err) {
