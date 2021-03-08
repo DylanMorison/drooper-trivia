@@ -57,7 +57,7 @@ router.post("/signin", async (req, res) => {
 			return res.status(404).send({ error: "Email Not Found" });
 		}
 
-		await user.comparePassword(password);
+		const testPassword = await user.comparePassword(password);
 
 		const token = jwt.sign({ userId: user._id }, config.get("jwtSecret"));
 
