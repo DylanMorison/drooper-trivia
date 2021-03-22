@@ -7,6 +7,7 @@ import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import trivRoutes from "./routes/triviaRoutes.js";
 import userRoutes from "./routes/UserRoutes.js";
+import portfolioRoutes from "./routes/portfolioRoutes.js";
 
 connectDB();
 
@@ -18,6 +19,7 @@ app.use(morgan("tiny"));
 app.use("/api/auth", authRoutes);
 app.use("/api/triv", trivRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/portfolio", portfolioRoutes);
 
 const PORT = process.env.PORT || 5000;
 

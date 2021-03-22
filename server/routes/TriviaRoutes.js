@@ -54,14 +54,7 @@ router.post("/create", requireAuth, async (req, res) => {
 
 router.post("/round/create", requireAuth, anserTypeCheck, async (req, res) => {
 	const user = req.user;
-	const {
-		triviaID,
-		roundTitle,
-		answerType,
-		numQuestions,
-		questions,
-		answers
-	} = req.body;
+	const { triviaID, roundTitle, answerType, numQuestions, questions, answers } = req.body;
 
 	try {
 		const currentTrivia = await Trivia.findOne({ _id: triviaID, author: user._id });

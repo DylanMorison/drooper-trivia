@@ -44,3 +44,20 @@ export const passwordReset = async (email, code) => {
 		console.log(err);
 	}
 };
+
+export const portfolioEmail = async (email, subject, body) => {
+	const message = {
+		from: "dylan@g.morison.org",
+		to: "dylan@rmdashrf.net",
+		subject,
+		html: `<p>Hey Dylan this is Dylan! ${email} has sent you a message:</p>
+					 <p>${body}</p>`
+	};
+
+	try {
+		const res = await sgMail.send(message);
+		return res;
+	} catch (err) {
+		console.log(err);
+	}
+};

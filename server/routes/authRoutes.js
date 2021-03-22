@@ -23,6 +23,8 @@ router.get("/", requireAuth, async (req, res) => {
 router.post("/signup", async (req, res) => {
 	const { email, password } = req.body;
 
+	debugger;
+
 	const user = new User({
 		email,
 		emailToken: crypto.randomBytes(64).toString("hex"),

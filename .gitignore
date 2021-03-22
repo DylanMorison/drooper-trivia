@@ -4,4 +4,6 @@ server/config/default.json
 web_client/node_modules
 web_client/build
 
+native_client
+
 .vscode
