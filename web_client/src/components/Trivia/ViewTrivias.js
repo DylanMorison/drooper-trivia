@@ -8,7 +8,8 @@ import {
 	Card,
 	Typography,
 	IconButton,
-	Button
+	Button,
+	Slide
 } from "@material-ui/core";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
@@ -218,12 +219,19 @@ const ViewTrivias = ({ userTrivias, createTrivia }) => {
 
 	const renderTrivias = () => {
 		let i = 0;
-
+		// appear controls how fast items an item shows up after being renedered
+		let appear = 10000;
+		// enter controls how fast new items enter the dom
+		let enter = 1000;
 		return (
 			<>
 				{userTrivias.map((triv) => (
 					<Grid md={3} sm={6} xs={12} key={i++} item className={classes.item}>
-						<Fade in={true} timeout={750}>
+						<Slide
+							in={true}
+							timeout={{ enter: (enter += 100), appear: 0 }}
+							direction={i % 4 === 0 ? "right" : "left"}
+						>
 							<CustomCard variant="outlined">
 								<CustomCardActionArea disableRipple>
 									<CardContent>
@@ -261,7 +269,7 @@ const ViewTrivias = ({ userTrivias, createTrivia }) => {
 									</Tooltip>
 								</CustomCardAction>
 							</CustomCard>
-						</Fade>
+						</Slide>
 					</Grid>
 				))}
 			</>

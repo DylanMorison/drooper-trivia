@@ -11,7 +11,7 @@ const useStyles = makeStyles({
 export const Profile = ({ auth }) => {
 	const classes = useStyles();
 
-	return <div className={classes.root}></div>;
+	return <div className={classes.root}>Profile</div>;
 };
 
 const mapStateToProps = (state) => ({ auth: state.auth });
