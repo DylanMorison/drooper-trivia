@@ -17,8 +17,38 @@ export const fetchAllTrivias = (userId) => async (dispatch) => {
 
 export const createTrivia = (title) => async (dispatch) => {
 	try {
-		const res = await axios.post(`${url}/create`, { title });
-		dispatch({ type: CREATE_TRIVIA, payload: res.data });
+		// const res = await axios.post(`${url}/create`, { title });
+		// dispatch({ type: CREATE_TRIVIA, payload: res.data });
+
+		dispatch({
+			type: CREATE_TRIVIA,
+			payload: {
+				triviaTitle: title,
+				author: "Dylan",
+				rounds: [
+					{ roundTitle: "roundTitle" },
+					{ roundTitle: "roundTitle" },
+					{ roundTitle: "roundTitle" },
+					{ roundTitle: "roundTitle" },
+					{ roundTitle: "roundTitle" },
+					{ roundTitle: "roundTitle" },
+					{ roundTitle: "roundTitle" },
+					{ roundTitle: "roundTitle" }
+				],
+				competitors: [
+					{ competitorName: "competitorName" },
+					{ competitorName: "competitorName" },
+					{ competitorName: "competitorName" },
+					{ competitorName: "competitorName" },
+					{ competitorName: "competitorName" },
+					{ competitorName: "competitorName" },
+					{ competitorName: "competitorName" },
+					{ competitorName: "competitorName" }
+				],
+				createdAt: "2021-02-22T00:48:36.209+00:00",
+				updatedAt: "2021-02-22T00:48:36.209+00:00"
+			}
+		});
 	} catch (err) {
 		console.log(err.msg);
 	}
