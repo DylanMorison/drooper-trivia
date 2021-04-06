@@ -35,7 +35,8 @@ import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
-
+import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
+import Fade from "@material-ui/core/Fade";
 import { createTrivia } from "../../actions/trivia";
 
 const useStyles = makeStyles({
@@ -81,7 +82,8 @@ const CreateTriviaFAB = styled(Fab)({
 const ViewTrivias = ({ userTrivias, createTrivia }) => {
 	const classes = useStyles();
 
-	const [trivias, setTrivias] = useState(userTrivias);
+	const [fadeDuration, setFadeDuration] = useState(1000);
+	const [trivs, setTrivs] = useState(null);
 	const [open, setOpen] = useState(false);
 	const [roundsCollapse, setOpenRoundsCollapse] = useState(false);
 	const [competitorCollapse, setOpenCompetitorCollapse] = useState(false);
@@ -102,9 +104,9 @@ const ViewTrivias = ({ userTrivias, createTrivia }) => {
 		setOpenCompetitorCollapse(!competitorCollapse);
 	};
 
-	useEffect(() => {
-		// fetch trivias
-	}, []);
+	useEffect(() => {}, [userTrivias]);
+
+	console.log(userTrivias);
 
 	const formattedDate = (unformatedDate) => {
 		let d = new Date(unformatedDate);
@@ -164,13 +166,13 @@ const ViewTrivias = ({ userTrivias, createTrivia }) => {
 					<ListItemIcon>
 						<FolderIcon />
 					</ListItemIcon>
-					<ListItemText primary="Rounds" />
+					<ListItemText primary={`${roundArr.length} Rounds`} />
 					{roundsCollapse ? <ExpandLess /> : <ExpandMore />}
 				</ListItem>
 				<Collapse in={roundsCollapse} timeout="auto" unmountOnExit>
 					<List component="div" disablePadding>
 						{roundArr.map((round) => (
-							<ListItem key={index++}>
+							<ListItem key={index}>
 								<ListItemText
 									primary={`${index++}. ${round.roundTitle}`}
 									style={{ textAlign: "left" }}
@@ -190,9 +192,9 @@ const ViewTrivias = ({ userTrivias, createTrivia }) => {
 			<List component="nav" aria-label="secondary mailbox folders">
 				<ListItem button onClick={handleClickCollapseCompetitors}>
 					<ListItemIcon>
-						<FolderIcon />
+						<SupervisorAccountIcon />
 					</ListItemIcon>
-					<ListItemText primary="Competitors" />
+					<ListItemText primary={`${competitorArr.length} Competitors`} />
 					{competitorCollapse ? <ExpandLess /> : <ExpandMore />}
 				</ListItem>
 				<Collapse in={competitorCollapse} timeout="auto" unmountOnExit>
@@ -216,47 +218,50 @@ const ViewTrivias = ({ userTrivias, createTrivia }) => {
 
 	const renderTrivias = () => {
 		let i = 0;
+
 		return (
 			<>
 				{userTrivias.map((triv) => (
 					<Grid md={3} sm={6} xs={12} key={i++} item className={classes.item}>
-						<CustomCard variant="outlined">
-							<CustomCardActionArea disableRipple>
-								<CardContent>
-									<Button
-										fullWidth
-										variant="text"
-										size="large"
-										style={{ textTransform: "none" }}
+						<Fade in={true} timeout={750}>
+							<CustomCard variant="outlined">
+								<CustomCardActionArea disableRipple>
+									<CardContent>
+										<Button
+											fullWidth
+											variant="text"
+											size="large"
+											style={{ textTransform: "none" }}
+										>
+											{triv.triviaTitle}
+										</Button>
+
+										<Typography variant="body2" color="textSecondary" component="p">
+											{renderTriviaRounds(triv.rounds)}
+										</Typography>
+										<Typography variant="body2" color="textSecondary" component="p">
+											{renderCompetitors(triv.competitors)}
+										</Typography>
+									</CardContent>
+								</CustomCardActionArea>
+								<CustomCardAction>
+									<Typography
+										variant="body2"
+										color="textSecondary"
+										component="p"
+										style={{ marginLeft: "20px" }}
 									>
-										{triv.triviaTitle}
-									</Button>
-
-									<Typography variant="body2" color="textSecondary" component="p">
-										{renderTriviaRounds(triv.rounds)}
+										Opened {formattedDate(triv.updatedAt)}
 									</Typography>
-									<Typography variant="body2" color="textSecondary" component="p">
-										{renderCompetitors(triv.competitors)}
-									</Typography>
-								</CardContent>
-							</CustomCardActionArea>
-							<CustomCardAction>
-								<Typography
-									variant="body2"
-									color="textSecondary"
-									component="p"
-									style={{ marginLeft: "20px" }}
-								>
-									Opened {formattedDate(triv.updatedAt)}
-								</Typography>
 
-								<Tooltip title="edit">
-									<IconButton onClick={handleClickOpen} style={{ marginLeft: "auto" }}>
-										<MoreVertIcon />
-									</IconButton>
-								</Tooltip>
-							</CustomCardAction>
-						</CustomCard>
+									<Tooltip title="edit">
+										<IconButton onClick={handleClickOpen} style={{ marginLeft: "auto" }}>
+											<MoreVertIcon />
+										</IconButton>
+									</Tooltip>
+								</CustomCardAction>
+							</CustomCard>
+						</Fade>
 					</Grid>
 				))}
 			</>
@@ -277,7 +282,7 @@ const ViewTrivias = ({ userTrivias, createTrivia }) => {
 			<CreateTriviaFAB
 				aria-label="add"
 				onClick={() => {
-					<Redirect to="/trivia/create" />;
+					createTrivia();
 				}}
 			>
 				<AddIcon />

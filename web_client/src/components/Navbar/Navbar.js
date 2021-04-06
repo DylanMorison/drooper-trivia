@@ -188,11 +188,11 @@ function Navbar({ auth, logout }) {
 	return (
 		<nav className="NavbarItems">
 			{auth ? (
-				<NavLink to="/trivia" className="link">
+				<Link to="/trivia" className="link">
 					<h1 className="navbar-logo">
 						Drooper Trivia <i className="fas fa-hat-cowboy"></i>
 					</h1>
-				</NavLink>
+				</Link>
 			) : (
 				<Link to="/" className="link">
 					<h1 className="navbar-logo">
@@ -204,9 +204,9 @@ function Navbar({ auth, logout }) {
 			<div className="menu-icon" onClick={handleClick}>
 				<i className={clicked ? "fas fa-times" : "fas fa-bars"}></i>
 			</div>
-			<ul className={clicked ? "nav-menu active" : "nav-menu"}>
+			<div className={clicked ? "nav-menu active" : "nav-menu"}>
 				{auth ? authLinks() : nonAuthLinks()}
-			</ul>
+			</div>
 			<Popper
 				open={open}
 				anchorEl={anchorRef.current}
@@ -228,25 +228,37 @@ function Navbar({ auth, logout }) {
 									id="menu-list-grow"
 									onKeyDown={handleListKeyDown}
 								>
-									<MenuItem onClick={handleClose}>
-										<Link to="/trivia/create" className="link">
-											<span className="nav-links-trivia">Create</span>
-										</Link>
+									<MenuItem
+										onClick={handleClose}
+										className="nav-links-trivia"
+										component={Link}
+										to="/trivia/create"
+									>
+										Create
 									</MenuItem>
-									<MenuItem onClick={handleClose}>
-										<Link to="/trivia/view" className="link">
-											<span className="nav-links-trivia">View</span>
-										</Link>
+									<MenuItem
+										onClick={handleClose}
+										className="nav-links-trivia"
+										component={Link}
+										to="/trivia/view"
+									>
+										View
 									</MenuItem>
-									<MenuItem onClick={handleClose}>
-										<Link to="/trivia/host" className="link">
-											<span className="nav-links-trivia">Host</span>
-										</Link>
+									<MenuItem
+										onClick={handleClose}
+										className="nav-links-trivia"
+										component={Link}
+										to="/trivia/host"
+									>
+										Host
 									</MenuItem>
-									<MenuItem onClick={handleClose}>
-										<Link to="/trivia/join" className="link">
-											<span className="nav-links-trivia">Join</span>
-										</Link>
+									<MenuItem
+										onClick={handleClose}
+										className="nav-links-trivia"
+										component={Link}
+										to="/trivia/join"
+									>
+										Join
 									</MenuItem>
 								</MenuList>
 							</ClickAwayListener>

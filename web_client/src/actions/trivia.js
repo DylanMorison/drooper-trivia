@@ -15,7 +15,7 @@ export const fetchAllTrivias = (userId) => async (dispatch) => {
 	}
 };
 
-export const createTrivia = (title) => async (dispatch) => {
+export const createTrivia = () => async (dispatch) => {
 	try {
 		// const res = await axios.post(`${url}/create`, { title });
 		// dispatch({ type: CREATE_TRIVIA, payload: res.data });
@@ -23,7 +23,7 @@ export const createTrivia = (title) => async (dispatch) => {
 		dispatch({
 			type: CREATE_TRIVIA,
 			payload: {
-				triviaTitle: title,
+				triviaTitle: "Untitled Trivia",
 				author: "Dylan",
 				rounds: [
 					{ roundTitle: "roundTitle" },
