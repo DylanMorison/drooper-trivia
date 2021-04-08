@@ -1,8 +1,8 @@
 server/node_modules
 server/config/default.json
 
-web_client/node_modules
-web_client/build
+client/node_modules
+client/build
 
 native_client
 
