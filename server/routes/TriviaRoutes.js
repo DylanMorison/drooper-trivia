@@ -43,10 +43,11 @@ router.post("/create", requireAuth, async (req, res) => {
 	const { triviaTitle } = req.body;
 
 	try {
-		await new Trivia({ triviaTitle, author: user._id }).save();
+		await new Trivia({ triviaTitle, author: user._id }).save((err, doc) => {
+			if (err) throw err;
 
-		const trivias = await Trivia.find({ author: user._id }).sort({ createdAt: -1 });
-		return res.status(200).send(trivias);
+			res.status(200).send(doc);
+		});
 	} catch (err) {
 		res.status(400).send(err.message);
 	}

@@ -8,3 +8,5 @@ export const PASSWORD_RESET_CODE = "PASSWORD_RESET_CODE";
 export const SET_CURRENT_TRIVIA = "SET_CURRENT_TRIVIA";
 export const DELETE_TRIVIA = "DELETE_TRIVIA";
 export const LAST_ACTION = "LAST_ACTION";
+export const LOADING = "LOADING";
+export const NOT_LOADING = "NOT_LOADING";

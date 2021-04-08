@@ -253,10 +253,10 @@ const ViewTrivias = () => {
 						// component={Link}
 						// to="/trivia/create"
 						onClick={async () => {
-							if (createTriviaTitle.length <= 3) {
+							if (createTriviaTitle.length <= 2) {
 								setTriviaTitleError({
 									exists: true,
-									msg: "Title is too short!"
+									msg: "Title is too short! Atleast 3 characters please :)"
 								});
 							} else if (doesTitleExist(allTrivias, createTriviaTitle)) {
 								setTriviaTitleError({

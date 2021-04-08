@@ -620,7 +620,7 @@ const testTrivs = [
 	// 	}
 ];
 
-export default function (state = [], action) {
+export default function triviaReducer(state = [], action) {
 	const { type, payload } = action;
 
 	switch (type) {

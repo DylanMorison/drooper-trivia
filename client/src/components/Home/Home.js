@@ -9,9 +9,9 @@ import "./HeroSection.css";
 const Home = () => {
 	const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
 
-	if (isAuthenticated) {
-		return <Redirect to="/trivia/view" />;
-	}
+	// if (isAuthenticated) {
+	// 	return <Redirect to="/trivia/view" />;
+	// }
 	return (
 		<>
 			<div className="hero-container">

@@ -1,13 +1,21 @@
 import { SIGNUP, SIGNIN, LOGOUT, LOAD_USER } from "../actions/types";
 
-const initialState = {
-	isAuthenticated: false,
-	userId: null,
-	loading: true,
-	isVerified: false
+const authCheck = () => {
+	if (localStorage.getItem("Authorization")) {
+		return true;
+	} else {
+		return false;
+	}
 };
 
-export default function (state = initialState, action) {
+const initialState = {
+	isAuthenticated: authCheck(),
+	userId: null,
+	isVerified: false,
+	token: localStorage.getItem("Authorization")
+};
+
+export default function authReducer(state = initialState, action) {
 	const { type, payload } = action;
 
 	switch (type) {
@@ -15,8 +23,7 @@ export default function (state = initialState, action) {
 			return {
 				...state,
 				isAuthenticated: true,
-				userId: payload._id,
-				loading: false
+				userId: payload._id
 			};
 		case SIGNIN:
 		case SIGNUP:
@@ -28,8 +35,7 @@ export default function (state = initialState, action) {
 			return {
 				...state,
 				isAuthenticated: false,
-				userId: null,
-				loading: false
+				userId: null
 			};
 		default:
 			return state;
