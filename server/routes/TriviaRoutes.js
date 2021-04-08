@@ -40,13 +40,13 @@ router.get("/triv-by-id", requireAuth, async (req, res) => {
 router.post("/create", requireAuth, async (req, res) => {
 	const user = req.user;
 
-	const triviaTitle = req.body.title;
+	const { triviaTitle } = req.body;
 
 	try {
-		await new Trivia({ triviaTitle, author: user._id }).save((err, doc) => {
-			if (err) return res.status(400).send(err.message);
-			res.send(doc);
-		});
+		await new Trivia({ triviaTitle, author: user._id }).save();
+
+		const trivias = await Trivia.find({ author: user._id }).sort({ createdAt: -1 });
+		return res.status(200).send(trivias);
 	} catch (err) {
 		res.status(400).send(err.message);
 	}
@@ -101,10 +101,16 @@ router.delete("/delete", requireAuth, async (req, res) => {
 	const user = req.user;
 	const { _id } = req.body;
 
-	await Trivia.findByIdAndDelete({ _id, author: user._id }, (err, doc) => {
-		if (err) return res.status(400).send(err.message);
-		return res.send(doc);
-	});
+	try {
+		await Trivia.findByIdAndDelete({ _id, author: user._id }, (err, doc) => {
+			if (err) return res.status(400).send(err.message);
+		});
+		const trivias = await Trivia.find({ author: user._id }).sort({ createdAt: -1 });
+		return res.status(200).send(trivias);
+	} catch (err) {
+		console.log(err.message);
+		res.status(400).send(err.message);
+	}
 });
 
 export default router;

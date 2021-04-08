@@ -9,7 +9,7 @@ import Contact from "./components/Contact/Contact";
 import signin from "./components/auth/signin";
 import signup from "./components/auth/signup";
 import logout from "./components/auth/logout";
-import ViewTrivias from "./components/Trivia/ViewTrivias";
+import ViewTrivias from "./components/Trivia/ViewTrivias/ViewTrivias";
 import CreateTrivia from "./components/Trivia/CreateTrivia";
 import CodeVerification from "./components/auth/CodeVerification";
 import ResetPassword from "./components/auth/resetPassword";

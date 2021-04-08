@@ -27,7 +27,5 @@ export const getConfigObj = (method, endpoint, data = null) => {
 		data: JSON.stringify(data)
 	};
 
-	console.log(config);
-
 	return config;
 };

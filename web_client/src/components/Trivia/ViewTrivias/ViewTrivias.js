@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
-import {
-	makeStyles,
-	Grid,
-	Container,
-	Card,
-	Typography,
-	IconButton,
-	Button,
-	Slide
-} from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
+import { Redirect, Link } from "react-router-dom";
+import Button from "@material-ui/core/Button";
+import { Fade, makeStyles } from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
+import Container from "@material-ui/core/Container";
+import Card from "@material-ui/core/Card";
+import Typography from "@material-ui/core/Typography";
+import IconButton from "@material-ui/core/IconButton";
 import CardActionArea from "@material-ui/core/CardActionArea";
+import Slide from "@material-ui/core/Slide";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
 import { styled } from "@material-ui/core/styles";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Tooltip from "@material-ui/core/Tooltip";
@@ -37,8 +34,14 @@ import Avatar from "@material-ui/core/Avatar";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
-import Fade from "@material-ui/core/Fade";
-import { createTrivia } from "../../actions/trivia";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Loading from "../../Loading";
+import {
+	createTrivia,
+	setTrivia,
+	fetchAllTrivias,
+	deleteTrivia
+} from "../../../actions/trivia";
 
 const useStyles = makeStyles({
 	container: {
@@ -80,21 +83,46 @@ const CreateTriviaFAB = styled(Fab)({
 	color: "white"
 });
 
-const ViewTrivias = ({ userTrivias, createTrivia }) => {
+const ViewTrivias = () => {
 	const classes = useStyles();
+	const dispatch = useDispatch();
+	const authorId = useSelector(state => state.auth.userId);
+	const allTrivias = useSelector(state => state.allTrivias);
 
-	const [fadeDuration, setFadeDuration] = useState(1000);
-	const [trivs, setTrivs] = useState(null);
-	const [open, setOpen] = useState(false);
+	const [loading, setLoading] = useState(true);
+
+	const [createTriviaTitle, setCreateTriviaTitle] = useState("");
+	const [triviaTitleError, setTriviaTitleError] = useState({ exists: false, msg: "" });
+
+	const [userInputForDelete, setUserInputForDelete] = useState("");
+	const [trivEditInfo, setTrivEditInfo] = useState({ id: null, title: null });
+
+	const [deleteMode, setDeleteMode] = useState(false);
+	const [openEditDialog, setOpenEditDialog] = useState(false);
+	const [openCreateDialog, setOpenCreateDialog] = useState(false);
+
 	const [roundsCollapse, setOpenRoundsCollapse] = useState(false);
 	const [competitorCollapse, setOpenCompetitorCollapse] = useState(false);
 
-	const handleClickOpen = () => {
-		setOpen(true);
+	useEffect(() => {
+		dispatch(fetchAllTrivias());
+	}, [dispatch]);
+
+	const handleEditButton = () => {
+		setOpenEditDialog(true);
 	};
 
-	const handleClose = () => {
-		setOpen(false);
+	const handleCloseEditDialog = () => {
+		setDeleteMode(false);
+		setOpenEditDialog(false);
+	};
+
+	const handleCreateBtn = () => {
+		setOpenCreateDialog(true);
+	};
+
+	const handleCloseCreateDialog = () => {
+		setOpenCreateDialog(false);
 	};
 
 	const handleClickCollapseRounds = () => {
@@ -105,11 +133,7 @@ const ViewTrivias = ({ userTrivias, createTrivia }) => {
 		setOpenCompetitorCollapse(!competitorCollapse);
 	};
 
-	useEffect(() => {}, [userTrivias]);
-
-	console.log(userTrivias);
-
-	const formattedDate = (unformatedDate) => {
+	const formattedDate = unformatedDate => {
 		let d = new Date(unformatedDate);
 
 		const ye = new Intl.DateTimeFormat("en", { year: "numeric" }).format(d);
@@ -123,31 +147,67 @@ const ViewTrivias = ({ userTrivias, createTrivia }) => {
 
 	const EditTrivTitle = () => (
 		<div>
-			<Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+			<Dialog
+				open={openEditDialog}
+				onClose={handleCloseEditDialog}
+				aria-labelledby="form-dialog-title"
+			>
 				<DialogTitle id="form-dialog-title">Quick Edit</DialogTitle>
 				<DialogContent>
 					<DialogContentText>
 						Quickly Change the Trivia Title, add or remove users, or delete this trivia.
 					</DialogContentText>
+
 					<TextField
-						autoFocus
 						margin="dense"
 						id="name"
 						label="Trivia Title"
 						type="text"
 						fullWidth
 					/>
+
+					{deleteMode ? (
+						<TextField
+							margin="dense"
+							id="name"
+							label={`Type "${trivEditInfo.title}" To Confirm Deletion`}
+							type="text"
+							fullWidth
+							color="secondary"
+							autoFocus
+							value={userInputForDelete}
+							onChange={e => {
+								setUserInputForDelete(e.target.value);
+							}}
+						/>
+					) : null}
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={handleClose} color="secondary" style={{ marginRight: "auto" }}>
-						Delete
+					<Button
+						onClick={async () => {
+							if (!deleteMode && userInputForDelete !== trivEditInfo.title) {
+								await dispatch(deleteTrivia(trivEditInfo.id));
+							}
+							setDeleteMode(true);
+						}}
+						color="secondary"
+						style={{ marginRight: "auto" }}
+						disabled={
+							!deleteMode
+								? false
+								: deleteMode && userInputForDelete !== trivEditInfo.title
+								? true
+								: false
+						}
+					>
+						{deleteMode ? "CONFIRM DELETION" : "DELETE"}
 					</Button>
-					<Button onClick={handleClose} color="primary">
+					<Button onClick={handleCloseEditDialog} color="primary">
 						Cancel
 					</Button>
 					<Button
 						onClick={() => {
-							handleClose();
+							handleCloseEditDialog();
 							// function to change Trivia Title
 						}}
 						color="primary"
@@ -159,7 +219,64 @@ const ViewTrivias = ({ userTrivias, createTrivia }) => {
 		</div>
 	);
 
-	const renderTriviaRounds = (roundArr) => {
+	const createNewTriviaDialog = () => (
+		<div>
+			<Dialog
+				open={openCreateDialog}
+				onClose={handleCloseCreateDialog}
+				aria-labelledby="form-dialog-title"
+			>
+				<DialogTitle id="form-dialog-title">Create Trivia</DialogTitle>
+				<DialogContent>
+					<DialogContentText>Enter a title for your new Trivia!</DialogContentText>
+					<TextField
+						error={triviaTitleError.exists}
+						helperText={triviaTitleError.exists ? triviaTitleError.msg : ""}
+						autoFocus
+						margin="dense"
+						id="name"
+						label="Trivia Title"
+						type="text"
+						fullWidth
+						value={createTriviaTitle}
+						onChange={e => setCreateTriviaTitle(e.target.value)}
+					/>
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={handleCloseCreateDialog} color="primary">
+						Cancel
+					</Button>
+					<Button
+						// component={Link}
+						// to="/trivia/create"
+						onClick={async () => {
+							if (createTriviaTitle.length === 0) {
+								setTriviaTitleError({
+									exists: true,
+									msg: "Title is too short!"
+								});
+							}
+							await dispatch(createTrivia(createTriviaTitle));
+							dispatch(
+								setTrivia({
+									triviaTitle: createTriviaTitle,
+									author: authorId
+								})
+							);
+							handleCloseCreateDialog();
+							setLoading(true);
+							// function to change Trivia Title
+						}}
+						color="primary"
+					>
+						Save
+					</Button>
+				</DialogActions>
+			</Dialog>
+		</div>
+	);
+
+	const renderTriviaRounds = roundArr => {
 		let index = 1;
 		return (
 			<List component="nav" aria-label="secondary mailbox folders">
@@ -172,7 +289,7 @@ const ViewTrivias = ({ userTrivias, createTrivia }) => {
 				</ListItem>
 				<Collapse in={roundsCollapse} timeout="auto" unmountOnExit>
 					<List component="div" disablePadding>
-						{roundArr.map((round) => (
+						{roundArr.map(round => (
 							<ListItem key={index}>
 								<ListItemText
 									primary={`${index++}. ${round.roundTitle}`}
@@ -186,7 +303,7 @@ const ViewTrivias = ({ userTrivias, createTrivia }) => {
 		);
 	};
 
-	const renderCompetitors = (competitorArr) => {
+	const renderCompetitors = competitorArr => {
 		let index = 1;
 
 		return (
@@ -200,7 +317,7 @@ const ViewTrivias = ({ userTrivias, createTrivia }) => {
 				</ListItem>
 				<Collapse in={competitorCollapse} timeout="auto" unmountOnExit>
 					<List component="div" disablePadding>
-						{competitorArr.map((round) => (
+						{competitorArr.map(round => (
 							<ListItem key={index++}>
 								<ListItemAvatar>
 									<Avatar />
@@ -222,17 +339,17 @@ const ViewTrivias = ({ userTrivias, createTrivia }) => {
 		// appear controls how fast items an item shows up after being renedered
 		let appear = 10000;
 		// enter controls how fast new items enter the dom
-		let enter = 1000;
+		let enter = 500;
 		return (
 			<>
-				{userTrivias.map((triv) => (
+				{allTrivias.map(triv => (
 					<Grid md={3} sm={6} xs={12} key={i++} item className={classes.item}>
-						<Slide
+						<Fade
 							in={true}
 							timeout={{ enter: (enter += 100), appear: 0 }}
 							direction={i % 4 === 0 ? "right" : "left"}
 						>
-							<CustomCard variant="outlined">
+							<CustomCard variant="outlined" key={triv._id}>
 								<CustomCardActionArea disableRipple>
 									<CardContent>
 										<Button
@@ -263,13 +380,19 @@ const ViewTrivias = ({ userTrivias, createTrivia }) => {
 									</Typography>
 
 									<Tooltip title="edit">
-										<IconButton onClick={handleClickOpen} style={{ marginLeft: "auto" }}>
+										<IconButton
+											onClick={() => {
+												setTrivEditInfo({ id: triv._id, title: triv.triviaTitle });
+												handleEditButton();
+											}}
+											style={{ marginLeft: "auto" }}
+										>
 											<MoreVertIcon />
 										</IconButton>
 									</Tooltip>
 								</CustomCardAction>
 							</CustomCard>
-						</Slide>
+						</Fade>
 					</Grid>
 				))}
 			</>
@@ -278,29 +401,18 @@ const ViewTrivias = ({ userTrivias, createTrivia }) => {
 
 	return (
 		<>
-			{/* <Grid container className={classes.header}>
-				<Container maxWidth="xl" className={classes.container}></Container>
-			</Grid> */}
 			<Container maxWidth="lg" className={classes.container}>
 				<Grid container spacing={3}>
 					{renderTrivias()}
 				</Grid>
 			</Container>
 			{EditTrivTitle()}
-			<CreateTriviaFAB
-				aria-label="add"
-				onClick={() => {
-					createTrivia();
-				}}
-			>
+			{createNewTriviaDialog()}
+			<CreateTriviaFAB aria-label="add" onClick={handleCreateBtn}>
 				<AddIcon />
 			</CreateTriviaFAB>
 		</>
 	);
 };
 
-const mapStateToProps = (state) => ({
-	userTrivias: state.userTrivias
-});
-
-export default connect(mapStateToProps, { createTrivia })(ViewTrivias);
+export default ViewTrivias;

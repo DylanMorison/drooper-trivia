@@ -12,8 +12,6 @@ import Paper from "@material-ui/core/Paper";
 import Popper from "@material-ui/core/Popper";
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
-
-//css
 import "./Navbar.css";
 
 function Navbar({ auth, logout }) {
@@ -188,7 +186,7 @@ function Navbar({ auth, logout }) {
 	return (
 		<nav className="NavbarItems">
 			{auth ? (
-				<Link to="/trivia" className="link">
+				<Link to="/trivia/view" className="link">
 					<h1 className="navbar-logo">
 						Drooper Trivia <i className="fas fa-hat-cowboy"></i>
 					</h1>
