@@ -4,6 +4,5 @@ server/config/default.json
 client/node_modules
 client/build
 
-native_client
-
+goal.js
 .vscode

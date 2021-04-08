@@ -1,5 +1,11 @@
-export default function (email, password, callback, setError, confirmPassword = null) {
-	const emailIsValid = (testEmail) => {
+export const submitForm = (
+	email,
+	password,
+	callback,
+	setError,
+	confirmPassword = null
+) => {
+	const emailIsValid = testEmail => {
 		return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(testEmail);
 	};
 
@@ -21,10 +27,10 @@ export default function (email, password, callback, setError, confirmPassword = 
 	debugger;
 
 	callback(email, password);
-}
+};
 
 export const emailVerification = (email, setError) => {
-	const emailIsValid = (testEmail) => {
+	const emailIsValid = testEmail => {
 		return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(testEmail);
 	};
 

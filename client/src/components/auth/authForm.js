@@ -3,7 +3,7 @@ import { Button } from "../Button";
 import { connect } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
 import { signin, signup } from "../../actions/auth";
-import submitForm from "./submitForm";
+import { submitForm } from "./submitForm";
 import "./authForm.css";
 
 const AuthForm = ({ headerText, isSignup, signin, isAuthenticated, signup }) => {
@@ -13,7 +13,7 @@ const AuthForm = ({ headerText, isSignup, signin, isAuthenticated, signup }) => 
 	const [error, setError] = useState(null);
 
 	if (isAuthenticated) {
-		return <Redirect to="/trivia" />;
+		return <Redirect to="/trivia/view" />;
 	}
 
 	const callback = (email, password) => {
@@ -35,7 +35,7 @@ const AuthForm = ({ headerText, isSignup, signin, isAuthenticated, signup }) => 
 						<input
 							type="text"
 							value={email}
-							onChange={(e) => {
+							onChange={e => {
 								setError(null);
 								setEmail(e.target.value);
 							}}
@@ -46,7 +46,7 @@ const AuthForm = ({ headerText, isSignup, signin, isAuthenticated, signup }) => 
 						<input
 							type="password"
 							value={password}
-							onChange={(e) => {
+							onChange={e => {
 								setError(null);
 								setPassword(e.target.value);
 							}}
@@ -58,7 +58,7 @@ const AuthForm = ({ headerText, isSignup, signin, isAuthenticated, signup }) => 
 							<input
 								type="password"
 								value={confirmPassword}
-								onChange={(e) => {
+								onChange={e => {
 									setError(null);
 									setConfirmPassword(e.target.value);
 								}}
@@ -75,7 +75,7 @@ const AuthForm = ({ headerText, isSignup, signin, isAuthenticated, signup }) => 
 
 					<div>
 						<Button
-							onClick={(e) => {
+							onClick={e => {
 								e.preventDefault();
 								submitForm(email, password, callback, setError, confirmPassword);
 							}}
@@ -99,6 +99,6 @@ const AuthForm = ({ headerText, isSignup, signin, isAuthenticated, signup }) => 
 	);
 };
 
-const mapStateToProps = (state) => ({ isAuthenticated: state.auth.isAuthenticated });
+const mapStateToProps = state => ({ isAuthenticated: state.auth.isAuthenticated });
 
 export default connect(mapStateToProps, { signin, signup })(AuthForm);

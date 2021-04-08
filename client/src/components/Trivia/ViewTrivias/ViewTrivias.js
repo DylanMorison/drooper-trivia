@@ -36,12 +36,15 @@ import AddIcon from "@material-ui/icons/Add";
 import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Loading from "../../Loading";
+import RenderCompetitorsDialog from "./RenderCompetitorsDialog";
 import {
 	createTrivia,
 	setTrivia,
 	fetchAllTrivias,
 	deleteTrivia
 } from "../../../actions/trivia";
+
+import { doesTitleExist } from "./HelperFunctions";
 
 const useStyles = makeStyles({
 	container: {
@@ -250,21 +253,31 @@ const ViewTrivias = () => {
 						// component={Link}
 						// to="/trivia/create"
 						onClick={async () => {
-							if (createTriviaTitle.length === 0) {
+							if (createTriviaTitle.length <= 3) {
 								setTriviaTitleError({
 									exists: true,
 									msg: "Title is too short!"
 								});
+							} else if (doesTitleExist(allTrivias, createTriviaTitle)) {
+								setTriviaTitleError({
+									exists: true,
+									msg: "A Trivia with this title already exists!"
+								});
+							} else {
+								await dispatch(createTrivia(createTriviaTitle));
+								dispatch(
+									setTrivia({
+										triviaTitle: createTriviaTitle,
+										author: authorId
+									})
+								);
+								handleCloseCreateDialog();
+								setTriviaTitleError({
+									exists: false,
+									msg: ""
+								});
+								setLoading(true);
 							}
-							await dispatch(createTrivia(createTriviaTitle));
-							dispatch(
-								setTrivia({
-									triviaTitle: createTriviaTitle,
-									author: authorId
-								})
-							);
-							handleCloseCreateDialog();
-							setLoading(true);
 							// function to change Trivia Title
 						}}
 						color="primary"
@@ -303,36 +316,36 @@ const ViewTrivias = () => {
 		);
 	};
 
-	const renderCompetitors = competitorArr => {
-		let index = 1;
+	// const renderCompetitors = competitorArr => {
+	// 	let index = 1;
 
-		return (
-			<List component="nav" aria-label="secondary mailbox folders">
-				<ListItem button onClick={handleClickCollapseCompetitors}>
-					<ListItemIcon>
-						<SupervisorAccountIcon />
-					</ListItemIcon>
-					<ListItemText primary={`${competitorArr.length} Competitors`} />
-					{competitorCollapse ? <ExpandLess /> : <ExpandMore />}
-				</ListItem>
-				<Collapse in={competitorCollapse} timeout="auto" unmountOnExit>
-					<List component="div" disablePadding>
-						{competitorArr.map(round => (
-							<ListItem key={index++}>
-								<ListItemAvatar>
-									<Avatar />
-								</ListItemAvatar>
-								<ListItemText
-									primary={round.competitorName}
-									style={{ textAlign: "left" }}
-								/>
-							</ListItem>
-						))}
-					</List>
-				</Collapse>
-			</List>
-		);
-	};
+	// 	return (
+	// 		<List component="nav" aria-label="secondary mailbox folders">
+	// 			<ListItem button onClick={handleClickCollapseCompetitors}>
+	// 				<ListItemIcon>
+	// 					<SupervisorAccountIcon />
+	// 				</ListItemIcon>
+	// 				<ListItemText primary={`${competitorArr.length} Competitors`} />
+	// 				{competitorCollapse ? <ExpandLess /> : <ExpandMore />}
+	// 			</ListItem>
+	// 			<Collapse in={competitorCollapse} timeout="auto" unmountOnExit>
+	// 				<List component="div" disablePadding>
+	// 					{competitorArr.map(round => (
+	// 						<ListItem key={index++}>
+	// 							<ListItemAvatar>
+	// 								<Avatar />
+	// 							</ListItemAvatar>
+	// 							<ListItemText
+	// 								primary={round.competitorName}
+	// 								style={{ textAlign: "left" }}
+	// 							/>
+	// 						</ListItem>
+	// 					))}
+	// 				</List>
+	// 			</Collapse>
+	// 		</List>
+	// 	);
+	// };
 
 	const renderTrivias = () => {
 		let i = 0;
@@ -365,7 +378,12 @@ const ViewTrivias = () => {
 											{renderTriviaRounds(triv.rounds)}
 										</Typography>
 										<Typography variant="body2" color="textSecondary" component="p">
-											{renderCompetitors(triv.competitors)}
+											{/* {renderCompetitors(triv.competitors)} */}
+											<RenderCompetitorsDialog
+												competitorArr={triv.competitors}
+												handleClickCollapseCompetitors={handleClickCollapseCompetitors}
+												competitorCollapse={competitorCollapse}
+											/>
 										</Typography>
 									</CardContent>
 								</CustomCardActionArea>

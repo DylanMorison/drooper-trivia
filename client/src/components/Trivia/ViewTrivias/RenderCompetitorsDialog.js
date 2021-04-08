@@ -1,12 +1,23 @@
 import React from "react";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
 
-const RenderCompetitors = (props) => {
-  const {competitorArr} = props;
-		let index = 1;
-	return <>
-  	const renderCompetitors = competitorArr => {
+import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import Avatar from "@material-ui/core/Avatar";
+import Collapse from "@material-ui/core/Collapse";
+import ExpandMore from "@material-ui/icons/ExpandMore";
+import ExpandLess from "@material-ui/icons/ExpandLess";
+import PropTypes from "prop-types";
 
-		return (
+const RenderCompetitorsDialog = props => {
+	const { competitorArr, handleClickCollapseCompetitors, competitorCollapse } = props;
+	let index = 1;
+
+	return (
+		<>
 			<List component="nav" aria-label="secondary mailbox folders">
 				<ListItem button onClick={handleClickCollapseCompetitors}>
 					<ListItemIcon>
@@ -31,9 +42,14 @@ const RenderCompetitors = (props) => {
 					</List>
 				</Collapse>
 			</List>
-		);
-	};
-  </>;
+		</>
+	);
 };
 
-export default RenderCompetitors;
+RenderCompetitorsDialog.prototypes = {
+	competitorArr: PropTypes.array.isRequired,
+	handleClickCollapseCompetitors: PropTypes.func.isRequired,
+	competitorCollapse: PropTypes.bool.isRequired
+};
+
+export default RenderCompetitorsDialog;

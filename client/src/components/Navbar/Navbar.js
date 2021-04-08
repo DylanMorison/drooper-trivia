@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { NavLink, Link, useLocation } from "react-router-dom";
 import { connect } from "react-redux";
 import { authMenu, visitorMenu } from "./MenuItems";
@@ -47,10 +47,10 @@ function Navbar({ auth, logout }) {
 	};
 
 	const handleToggle = () => {
-		setOpen((prevOpen) => !prevOpen);
+		setOpen(prevOpen => !prevOpen);
 	};
 
-	const handleClose = (event) => {
+	const handleClose = event => {
 		if (anchorRef.current && anchorRef.current.contains(event.target)) {
 			return;
 		}
@@ -78,7 +78,6 @@ function Navbar({ auth, logout }) {
 				}}
 				ref={anchorRef}
 				aria-controls={open ? "menu-list-grow" : undefined}
-				aria-haspopup="true"
 			>
 				Trivia {open ? downArrow : upArrow}
 			</li>
@@ -268,7 +267,7 @@ function Navbar({ auth, logout }) {
 	);
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
 	return { auth: state.auth.isAuthenticated };
 };
 
