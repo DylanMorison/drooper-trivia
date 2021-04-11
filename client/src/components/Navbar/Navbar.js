@@ -171,7 +171,6 @@ function Navbar({ auth, logout }) {
 				}}
 			>
 				<li className="nav-links">
-					{" "}
 					<i className="fas fa-sign-out-alt"></i> logout
 				</li>
 			</Link>
@@ -197,10 +196,10 @@ function Navbar({ auth, logout }) {
 					</h1>
 				</Link>
 			)}
-
+			{/* 
 			<div className="menu-icon" onClick={handleClick}>
 				<i className={clicked ? "fas fa-times" : "fas fa-bars"}></i>
-			</div>
+			</div> */}
 			<div className={clicked ? "nav-menu active" : "nav-menu"}>
 				{auth ? authLinks() : nonAuthLinks()}
 			</div>
