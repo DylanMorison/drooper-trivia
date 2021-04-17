@@ -1,26 +1,4 @@
-// import { CircularProgress } from "@material-ui/core";
-// import React from "react";
-
-// const Loading = () => {
-// 	return (
-// 		<div
-// 			style={{
-// 				display: "flex",
-// 				justifyContent: "center",
-// 				alignItems: "center",
-// 				height: "80vh"
-// 			}}
-// 		>
-// 			<CircularProgress color="primary" size={200}>
-// 				Loading...
-// 			</CircularProgress>
-// 		</div>
-// 	);
-// };
-
-// export default Loading;
-
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import LinearProgress from "@material-ui/core/LinearProgress";
 
@@ -35,9 +13,9 @@ const useStyles = makeStyles({
 
 export default function Loading() {
 	const classes = useStyles();
-	const [progress, setProgress] = React.useState(0);
+	const [progress, setProgress] = useState(0);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		const timer = setInterval(() => {
 			setProgress(oldProgress => {
 				if (oldProgress === 100) {

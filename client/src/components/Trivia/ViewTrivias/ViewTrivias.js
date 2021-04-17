@@ -187,9 +187,9 @@ const ViewTrivias = () => {
 				</DialogContent>
 				<DialogActions>
 					<Button
-						onClick={async () => {
+						onClick={() => {
 							if (!deleteMode && userInputForDelete !== trivEditInfo.title) {
-								await dispatch(deleteTrivia(trivEditInfo.id));
+								dispatch(deleteTrivia(trivEditInfo.id));
 							}
 							setDeleteMode(true);
 						}}
@@ -316,36 +316,36 @@ const ViewTrivias = () => {
 		);
 	};
 
-	// const renderCompetitors = competitorArr => {
-	// 	let index = 1;
+	const renderCompetitors = competitorArr => {
+		let index = 1;
 
-	// 	return (
-	// 		<List component="nav" aria-label="secondary mailbox folders">
-	// 			<ListItem button onClick={handleClickCollapseCompetitors}>
-	// 				<ListItemIcon>
-	// 					<SupervisorAccountIcon />
-	// 				</ListItemIcon>
-	// 				<ListItemText primary={`${competitorArr.length} Competitors`} />
-	// 				{competitorCollapse ? <ExpandLess /> : <ExpandMore />}
-	// 			</ListItem>
-	// 			<Collapse in={competitorCollapse} timeout="auto" unmountOnExit>
-	// 				<List component="div" disablePadding>
-	// 					{competitorArr.map(round => (
-	// 						<ListItem key={index++}>
-	// 							<ListItemAvatar>
-	// 								<Avatar />
-	// 							</ListItemAvatar>
-	// 							<ListItemText
-	// 								primary={round.competitorName}
-	// 								style={{ textAlign: "left" }}
-	// 							/>
-	// 						</ListItem>
-	// 					))}
-	// 				</List>
-	// 			</Collapse>
-	// 		</List>
-	// 	);
-	// };
+		return (
+			<List component="nav" aria-label="secondary mailbox folders">
+				<ListItem button onClick={handleClickCollapseCompetitors}>
+					<ListItemIcon>
+						<SupervisorAccountIcon />
+					</ListItemIcon>
+					<ListItemText primary={`${competitorArr.length} Competitors`} />
+					{competitorCollapse ? <ExpandLess /> : <ExpandMore />}
+				</ListItem>
+				<Collapse in={competitorCollapse} timeout="auto" unmountOnExit>
+					<List component="div" disablePadding>
+						{competitorArr.map(round => (
+							<ListItem key={index++}>
+								<ListItemAvatar>
+									<Avatar />
+								</ListItemAvatar>
+								<ListItemText
+									primary={round.competitorName}
+									style={{ textAlign: "left" }}
+								/>
+							</ListItem>
+						))}
+					</List>
+				</Collapse>
+			</List>
+		);
+	};
 
 	const renderTrivias = () => {
 		let i = 0;
@@ -360,7 +360,7 @@ const ViewTrivias = () => {
 						<Fade
 							in={true}
 							timeout={{ enter: (enter += 100), appear: 0 }}
-							direction={i % 4 === 0 ? "right" : "left"}
+							// direction={i % 4 === 0 ? "right" : "left"}
 						>
 							<CustomCard variant="outlined" key={triv._id}>
 								<CustomCardActionArea disableRipple>
@@ -378,7 +378,6 @@ const ViewTrivias = () => {
 											{renderTriviaRounds(triv.rounds)}
 										</Typography>
 										<Typography variant="body2" color="textSecondary" component="p">
-											{/* {renderCompetitors(triv.competitors)} */}
 											<RenderCompetitorsDialog
 												competitorArr={triv.competitors}
 												handleClickCollapseCompetitors={handleClickCollapseCompetitors}
@@ -404,6 +403,7 @@ const ViewTrivias = () => {
 												handleEditButton();
 											}}
 											style={{ marginLeft: "auto" }}
+											data-testid={`edit-btn`}
 										>
 											<MoreVertIcon />
 										</IconButton>
@@ -418,8 +418,8 @@ const ViewTrivias = () => {
 	};
 
 	return (
-		<>
-			<Container maxWidth="lg" className={classes.container}>
+		<div data-testid="view-trivias-container">
+			<Container maxWidth="lg" className={classes.container} data-testid="trivia-list">
 				<Grid container spacing={3}>
 					{renderTrivias()}
 				</Grid>
@@ -429,7 +429,7 @@ const ViewTrivias = () => {
 			<CreateTriviaFAB aria-label="add" onClick={handleCreateBtn}>
 				<AddIcon />
 			</CreateTriviaFAB>
-		</>
+		</div>
 	);
 };
 

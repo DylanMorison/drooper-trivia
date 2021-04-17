@@ -4,5 +4,8 @@ server/config/default.json
 client/node_modules
 client/build
 
+client_ts/node_modules
+client_ts/build
+
 goal.js
 .vscode

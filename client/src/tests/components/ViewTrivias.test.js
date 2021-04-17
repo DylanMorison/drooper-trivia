@@ -1,12 +1,29 @@
 import React from "react";
-// We're using our own custom render function and not RTL's render
-// our custom utils also re-export everything from RTL
-// so we can import fireEvent and screen here as well
-import { render, fireEvent, screen } from "../test.utils";
-// custom testing middlewares
-import { thunk, create } from "../test.utils";
-import ViewTrivias from "../../components/Trivia/ViewTrivias/ViewTrivias";
+import { render, fireEvent, screen, cleanup } from "../test.utils";
+import {
+	render as defaultRender,
+	cleanup as defaultCleanup
+} from "@testing-library/react";
 
-it("Renders <ViewTrivias/> with initialState", () => {
-	render(<ViewTrivias />, { initialState: {} });
+import ViewTrivias from "../../components/Trivia/ViewTrivias/ViewTrivias";
+import { triviaList } from "../data/triviaList";
+import { expect } from "@jest/globals";
+
+describe("<ViewTrivias/>", () => {
+	test("Contains needed html components", () => {
+		const { getByTestId } = render(<ViewTrivias />, {
+			initialState: { allTrivias: triviaList }
+		});
+
+		expect(getByTestId("view-trivias-container")).toBeTruthy();
+		expect(getByTestId("trivia-list")).toBeTruthy();
+	});
+
+	test("trivia edit button functionality", () => {
+		const { getByTestId, getAllByTestId } = render(<ViewTrivias />, {
+			initialState: { allTrivias: triviaList }
+		});
+
+		expect(getAllByTestId("edit-btn").length).toBe(triviaList.length);
+	});
 });
