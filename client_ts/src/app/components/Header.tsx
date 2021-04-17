@@ -14,6 +14,8 @@ import HomeIcon from "@material-ui/icons/Home";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
+import { useAppSelector, useAppDispatch } from "../../redux/hooks";
+import { loadUser, logout } from "../../redux/authSlice";
 
 const LogoButton = styled(Button)({
 	border: 0,
@@ -49,6 +51,9 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = () => {
 	const classes = useStyles();
+	const dispatch = useAppDispatch();
+	const auth = useAppSelector((state) => state.auth.isAuthenticated);
+
 	const [tabValue, setTabValue] = React.useState(0);
 
 	const handleTabChange = (event: React.ChangeEvent, newValue: number) => {
@@ -71,8 +76,20 @@ const Header = () => {
 						<Tab label="Profile" key={1} onClick={() => setTabValue(1)}></Tab>
 					</Tabs> */}
 					<ButtonGroup>
-						<Button color="secondary">login</Button>
-						<Button color="secondary">signup</Button>
+						{auth ? (
+							<Button color="secondary" onClick={() => dispatch(logout())}>
+								logout
+							</Button>
+						) : (
+							<ButtonGroup>
+								<Button color="secondary" onClick={() => dispatch(loadUser())}>
+									login
+								</Button>
+								<Button color="secondary" onClick={() => dispatch(loadUser())}>
+									signup
+								</Button>
+							</ButtonGroup>
+						)}
 					</ButtonGroup>
 				</Toolbar>
 			</AppBar>

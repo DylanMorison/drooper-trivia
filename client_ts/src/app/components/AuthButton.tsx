@@ -1,9 +1,10 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { loadUser, logout } from "../../redux/authSlice";
+import { useAppDispatch } from "../../redux/hooks";
 
 const AuthButton = () => {
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	return (
 		<>
 			<button onClick={() => dispatch(loadUser())}>login user</button>
