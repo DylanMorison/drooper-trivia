@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import authRedcer, { loadUser } from "./authSlice";
+import authRedcer from "./authSlice";
 
 const store = configureStore({
-	reducer: { auth: authRedcer }
+  reducer: { auth: authRedcer },
 });
 
 export default store;
