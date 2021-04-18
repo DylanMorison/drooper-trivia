@@ -1,25 +1,22 @@
 import { createSlice, createAsyncThunk, ThunkDispatch } from "@reduxjs/toolkit";
 import { fetchTrivias } from "../app/pages/Trivias/utils/mockBackEnd";
 
-interface roundsType {
-	roundTitle: string;
-}
-
-interface competitorssType {
-	competitorName: string;
-}
-
 interface triviaType {
 	triviaTitle: string;
 	author: string;
-	rounds: roundsType[];
-	competitors: competitorssType[];
+	rounds: { roundTitle: string }[];
+	competitors: { competitorName: string }[];
 	id: string;
 	createdAt: string;
 	updatedAt: string;
 }
 
 export type triviasTypeArr = triviaType[];
+
+interface initialStateType {
+	loading: boolean;
+	trivias: triviasTypeArr;
+}
 
 const fetchUserTrivias = createAsyncThunk("trivia/fetchUserTrivias", async (thunkAPI) => {
 	const response = await fetchTrivias();
@@ -28,7 +25,10 @@ const fetchUserTrivias = createAsyncThunk("trivia/fetchUserTrivias", async (thun
 
 const triviaSlice = createSlice({
 	name: "trivia",
-	initialState: [] as triviasTypeArr,
+	initialState: {
+		loading: true,
+		trivias: []
+	} as initialStateType,
 	reducers: {
 		createTrivia: (state, action) => {
 			// state.push(action.payload)
@@ -36,7 +36,7 @@ const triviaSlice = createSlice({
 	},
 	extraReducers: (builder) => {
 		builder.addCase(fetchUserTrivias.fulfilled, (state, action) => {
-			return action.payload;
+			state.trivias = action.payload;
 		});
 	}
 });

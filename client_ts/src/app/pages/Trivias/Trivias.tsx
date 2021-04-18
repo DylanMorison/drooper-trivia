@@ -11,13 +11,13 @@ const useStyles = makeStyles((theme) => ({
 		position: "fixed",
 		right: "2%",
 		bottom: "2%",
-		background: "#3acbf7",
+		backgroundColor: theme.palette.primary.main,
 		color: "white"
 	}
 }));
 
 const Trivias = () => {
-	const trivias = useAppSelector((state) => state.trivia);
+	const trivias = useAppSelector((state) => state.trivia.trivias);
 	const dispatch = useAppDispatch();
 	const classes = useStyles();
 

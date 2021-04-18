@@ -16,7 +16,7 @@ import Tab from "@material-ui/core/Tab";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { loadUser, logout } from "../../redux/authSlice";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 const LogoButton = styled(Button)({
 	border: 0,
@@ -81,10 +81,10 @@ const Header = () => {
 							</Button>
 						) : (
 							<ButtonGroup>
-								<Button color="secondary" onClick={() => dispatch(loadUser())}>
+								<Button component={Link} to="/login" color="secondary">
 									login
 								</Button>
-								<Button color="secondary" onClick={() => dispatch(loadUser())}>
+								<Button component={Link} to="/signup" color="secondary">
 									signup
 								</Button>
 							</ButtonGroup>
