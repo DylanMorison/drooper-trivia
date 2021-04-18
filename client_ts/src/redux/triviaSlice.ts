@@ -1,8 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, ThunkDispatch } from "@reduxjs/toolkit";
+import { fetchTrivias } from "../app/pages/Trivias/utils/mockBackEnd";
 
 interface roundsType {
 	roundTitle: string;
 }
+
 interface competitorssType {
 	competitorName: string;
 }
@@ -19,210 +21,28 @@ interface triviaType {
 
 export type triviasTypeArr = triviaType[];
 
-const testTrivs: triviasTypeArr = [
-	{
-		triviaTitle: "triviaTitle",
-		author: "triviaAuthor",
-		rounds: [
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" }
-		],
-		competitors: [
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" }
-		],
-		id: "6032ff6400e36e7650ac24d1",
-		createdAt: "2021-02-22T00:48:36.209+00:00",
-		updatedAt: "2021-02-22T00:48:36.209+00:00"
-	},
-	{
-		triviaTitle: "triviaTitle",
-		author: "triviaAuthor",
-		rounds: [
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" }
-		],
-		competitors: [
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" }
-		],
-		id: "6032ff6400e36e7650ac24d1",
-		createdAt: "2021-02-22T00:48:36.209+00:00",
-		updatedAt: "2021-02-22T00:48:36.209+00:00"
-	},
-	{
-		triviaTitle: "triviaTitle",
-		author: "triviaAuthor",
-		rounds: [
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" }
-		],
-		competitors: [
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" }
-		],
-		id: "6032ff6400e36e7650ac24d1",
-		createdAt: "2021-02-22T00:48:36.209+00:00",
-		updatedAt: "2021-02-22T00:48:36.209+00:00"
-	},
-	{
-		triviaTitle: "triviaTitle",
-		author: "triviaAuthor",
-		rounds: [
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" }
-		],
-		competitors: [
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" }
-		],
-		id: "6032ff6400e36e7650ac24d1",
-		createdAt: "2021-02-22T00:48:36.209+00:00",
-		updatedAt: "2021-02-22T00:48:36.209+00:00"
-	},
-	{
-		triviaTitle: "triviaTitle",
-		author: "triviaAuthor",
-		rounds: [
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" }
-		],
-		competitors: [
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" }
-		],
-		id: "6032ff6400e36e7650ac24d1",
-		createdAt: "2021-02-22T00:48:36.209+00:00",
-		updatedAt: "2021-02-22T00:48:36.209+00:00"
-	},
-	{
-		triviaTitle: "triviaTitle",
-		author: "triviaAuthor",
-		rounds: [
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" }
-		],
-		competitors: [
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" }
-		],
-		id: "6032ff6400e36e7650ac24d1",
-		createdAt: "2021-02-22T00:48:36.209+00:00",
-		updatedAt: "2021-02-22T00:48:36.209+00:00"
-	},
-	{
-		triviaTitle: "triviaTitle",
-		author: "triviaAuthor",
-		rounds: [
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" },
-			{ roundTitle: "roundTitle" }
-		],
-		competitors: [
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" },
-			{ competitorName: "competitorName" }
-		],
-		id: "6032ff6400e36e7650ac24d1",
-		createdAt: "2021-02-22T00:48:36.209+00:00",
-		updatedAt: "2021-02-22T00:48:36.209+00:00"
-	}
-];
+const fetchUserTrivias = createAsyncThunk("trivia/fetchUserTrivias", async (thunkAPI) => {
+	const response = await fetchTrivias();
+	return response;
+});
 
 const triviaSlice = createSlice({
-	name: "auth",
-	initialState: testTrivs,
+	name: "trivia",
+	initialState: [] as triviasTypeArr,
 	reducers: {
-		getTrivias: (state, action) => {
-			state = action.payload;
+		createTrivia: (state, action) => {
+			// state.push(action.payload)
 		}
+	},
+	extraReducers: (builder) => {
+		builder.addCase(fetchUserTrivias.fulfilled, (state, action) => {
+			return action.payload;
+		});
 	}
 });
 
 const { actions, reducer } = triviaSlice;
 
-export const { getTrivias } = actions;
+export { fetchUserTrivias };
 
 export default reducer;
