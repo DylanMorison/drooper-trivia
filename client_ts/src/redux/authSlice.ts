@@ -1,19 +1,27 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const checkLocalStorage = () => {
+	if (localStorage.getItem("authorization")) {
+		return true;
+	} else return false;
+};
+
 const authSlice = createSlice({
 	name: "auth",
 	initialState: {
-		isAuthenticated: false,
+		isAuthenticated: checkLocalStorage(),
 		id: ""
 	},
 	reducers: {
 		loadUser: (state) => {
 			state.isAuthenticated = true;
 			state.id = "1234";
+			localStorage.setItem("authorization", "1234");
 		},
 		logout: function (state) {
 			state.isAuthenticated = false;
 			state.id = "";
+			localStorage.removeItem("authorization");
 		}
 	}
 });

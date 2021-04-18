@@ -16,7 +16,7 @@ import Tab from "@material-ui/core/Tab";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { loadUser, logout } from "../../redux/authSlice";
-import { Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const LogoButton = styled(Button)({
 	border: 0,
@@ -55,23 +55,21 @@ const Header = () => {
 	const dispatch = useAppDispatch();
 	const auth = useAppSelector((state) => state.auth.isAuthenticated);
 
-	const [tabValue, setTabValue] = React.useState(0);
-
-	const handleTabChange = (event: React.ChangeEvent, newValue: number) => {
-		setTabValue(newValue);
-	};
+	// const [tabValue, setTabValue] = React.useState(0);
 
 	return (
 		<div className={classes.grow}>
 			<AppBar position="static">
 				<Toolbar className={classes.toolbar}>
-					<LogoButton
-						disableFocusRipple
-						startIcon={<LogoIcon />}
-						className={classes.logoButtonHover}
-					>
-						<Typography variant="h6">Drooper Trivia</Typography>
-					</LogoButton>
+					<Link to={`${auth ? "/trivias" : "/"}`} style={{ textDecoration: "none" }}>
+						<LogoButton
+							disableFocusRipple
+							startIcon={<LogoIcon />}
+							className={classes.logoButtonHover}
+						>
+							<Typography variant="h6">Drooper Trivia</Typography>
+						</LogoButton>
+					</Link>
 					{/* <Tabs value={tabValue} className={classes.tabs}>
 						<Tab label="Trivias" key={0} onClick={() => setTabValue(0)}></Tab>
 						<Tab label="Profile" key={1} onClick={() => setTabValue(1)}></Tab>

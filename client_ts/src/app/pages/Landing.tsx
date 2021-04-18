@@ -1,7 +1,7 @@
 import React from "react";
 import { useAppSelector } from "../../redux/hooks";
 import { Redirect } from "react-router-dom";
-import Trivias from "../pages/Trivias";
+import Trivias from "./Trivias/Trivias";
 
 const Landing = () => {
 	const auth = useAppSelector((state) => state.auth.isAuthenticated);
