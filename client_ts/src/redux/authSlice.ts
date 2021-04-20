@@ -1,18 +1,32 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import authApi, { authDataType } from "../api/authRoutes";
+import axios, { AxiosResponse } from "axios";
+import { checkLocalStorage } from "./utils/checkLocalStorage";
 
-const checkLocalStorage = () => {
-	if (localStorage.getItem("authorization")) {
-		return true;
-	} else return false;
-};
+export interface loginResponseData {
+	id: string;
+	token: string;
+}
+
+export interface iAuthSlice {
+	isAuthenticated: boolean;
+	id: string | null;
+}
 
 const authSlice = createSlice({
 	name: "auth",
 	initialState: {
-		isAuthenticated: checkLocalStorage(),
-		id: ""
-	},
+		isAuthenticated: checkLocalStorage("authorization"),
+		id: null
+	} as iAuthSlice,
 	reducers: {
+		loginUser: (state, { payload }: PayloadAction<loginResponseData>) => {
+			if (!checkLocalStorage("authorization")) {
+				localStorage.setItem("authorization", payload.token);
+			}
+			state.isAuthenticated = true;
+			state.id = payload.id;
+		},
 		loadUser: (state) => {
 			state.isAuthenticated = true;
 			state.id = "1234";
@@ -20,15 +34,41 @@ const authSlice = createSlice({
 		},
 		logout: function (state) {
 			state.isAuthenticated = false;
-			state.id = "";
+			state.id = null;
 			localStorage.removeItem("authorization");
+			localStorage.removeItem("trivias");
 		}
 	}
+	// extraReducers: (builder) => {
+	// 	builder.addCase(loginUser.fulfilled, (state, { payload }) => {
+	// 		const { id, token } = payload;
+	// 		state.id = id;
+	// 		state.isAuthenticated = true;
+	// 		if (!checkLocalStorage("authorization")) {
+	// 			localStorage.setItem("authorization", token);
+	// 		}
+	// 	});
+	// }
 });
 
 const { actions, reducer } = authSlice;
 
-// loadUser action has type "auth/loadUser"
-export const { loadUser, logout } = actions;
+const { loadUser, logout, loginUser } = actions;
+
+export const loginUserThunk = createAsyncThunk(
+	"trivia/fetchUserTrivias",
+	async (postData: authDataType, { dispatch }) => {
+		const config = authApi.signInUserConfig(postData);
+		try {
+			const results: AxiosResponse<loginResponseData> = await axios(config);
+			const { id, token } = results.data;
+			dispatch(loginUser({ id, token }));
+		} catch (err) {
+			console.error("Unable to login user", err);
+		}
+	}
+);
+
+export { actions };
 
 export default reducer;

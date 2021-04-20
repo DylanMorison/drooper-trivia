@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-import { makeStyles, styled } from "@material-ui/core/styles";
+import { makeStyles, styled, useTheme } from "@material-ui/core/styles";
 import EditIcon from "@material-ui/icons/Edit";
 import Typography from "@material-ui/core/Typography";
 import EmojiEmotionsIcon from "@material-ui/icons/EmojiEmotions";
@@ -15,8 +15,10 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
-import { loadUser, logout } from "../../redux/authSlice";
+import { actions } from "../../redux/authSlice";
 import { Link, Redirect } from "react-router-dom";
+import Brightness5Icon from "@material-ui/icons/Brightness5";
+import Brightness4Icon from "@material-ui/icons/Brightness4";
 
 const LogoButton = styled(Button)({
 	border: 0,
@@ -47,20 +49,33 @@ const useStyles = makeStyles((theme) => ({
 	toolbar: {
 		display: "flex",
 		justifyContent: "space-between"
+	},
+	authButtons: {
+		marginLeft: "auto"
 	}
 }));
 
-const Header = () => {
+interface HeaderProps {
+	darkModeToggle: () => void;
+	darkOrLight: "light" | "dark";
+}
+
+const Header = ({ darkModeToggle, darkOrLight }: HeaderProps) => {
 	const classes = useStyles();
+	const theme = useTheme();
 	const dispatch = useAppDispatch();
 	const auth = useAppSelector((state) => state.auth.isAuthenticated);
 
 	// const [tabValue, setTabValue] = React.useState(0);
 
+	const CustomAppBar = styled(AppBar)({
+		backgroundColor: theme.palette.background.paper
+	});
+
 	return (
 		<div className={classes.grow}>
 			<AppBar position="static">
-				<Toolbar className={classes.toolbar}>
+				<Toolbar>
 					<Link to={`${auth ? "/trivias" : "/"}`} style={{ textDecoration: "none" }}>
 						<LogoButton
 							disableFocusRipple
@@ -74,22 +89,27 @@ const Header = () => {
 						<Tab label="Trivias" key={0} onClick={() => setTabValue(0)}></Tab>
 						<Tab label="Profile" key={1} onClick={() => setTabValue(1)}></Tab>
 					</Tabs> */}
-					<ButtonGroup>
-						{auth ? (
-							<Button color="secondary" onClick={() => dispatch(logout())}>
-								logout
-							</Button>
-						) : (
-							<ButtonGroup>
-								<Button component={Link} to="/login" color="secondary">
-									login
+					<div className={classes.authButtons}>
+						{/* <IconButton onClick={() => darkModeToggle()}>
+							{theme.palette.type === "dark" ? <Brightness4Icon /> : <Brightness5Icon />}
+						</IconButton> */}
+						<ButtonGroup>
+							{auth ? (
+								<Button color="secondary" onClick={() => dispatch(actions.logout())}>
+									logout
 								</Button>
-								<Button component={Link} to="/signup" color="secondary">
-									signup
-								</Button>
-							</ButtonGroup>
-						)}
-					</ButtonGroup>
+							) : (
+								<ButtonGroup>
+									<Button component={Link} to="/login" color="secondary">
+										login
+									</Button>
+									<Button component={Link} to="/signup" color="secondary">
+										signup
+									</Button>
+								</ButtonGroup>
+							)}
+						</ButtonGroup>
+					</div>
 				</Toolbar>
 			</AppBar>
 		</div>

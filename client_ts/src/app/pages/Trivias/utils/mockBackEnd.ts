@@ -196,6 +196,6 @@ export const fetchTrivias = () => {
 	return new Promise<triviasTypeArr>((resolve, reject) => {
 		setTimeout(() => {
 			resolve(testTrivs);
-		}, 1000);
+		}, 3000);
 	});
 };

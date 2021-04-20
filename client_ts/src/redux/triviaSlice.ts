@@ -1,5 +1,12 @@
-import { createSlice, createAsyncThunk, ThunkDispatch } from "@reduxjs/toolkit";
+import {
+	createSlice,
+	createAsyncThunk,
+	ThunkDispatch,
+	PayloadAction
+} from "@reduxjs/toolkit";
 import { fetchTrivias } from "../app/pages/Trivias/utils/mockBackEnd";
+import { checkLocalStorage } from "./utils/checkLocalStorage";
+import { getFromLS } from "./utils/retrieveFromLocalStorage";
 
 interface triviaType {
 	triviaTitle: string;
@@ -13,36 +20,46 @@ interface triviaType {
 
 export type triviasTypeArr = triviaType[];
 
-interface initialStateType {
-	loading: boolean;
+export interface initialStateType {
+	loaded: boolean | 'pending';
 	trivias: triviasTypeArr;
 }
 
-const fetchUserTrivias = createAsyncThunk("trivia/fetchUserTrivias", async (thunkAPI) => {
-	const response = await fetchTrivias();
-	return response;
+const fetchUserTriviasThunk = createAsyncThunk("trivia/fetchUserTrivias", async () => {
+	try {
+		const response = await fetchTrivias();
+		return response;
+	} catch (err) {
+		console.error("err fetching trivias", err);
+	}
 });
 
 const triviaSlice = createSlice({
 	name: "trivia",
 	initialState: {
-		loading: true,
+		loaded: false,
 		trivias: []
 	} as initialStateType,
 	reducers: {
-		createTrivia: (state, action) => {
-			// state.push(action.payload)
-		}
+		wipeTrivias: (state) => {
+			return (state = {
+				loaded: false,
+				trivias: []
+			});
+		},
 	},
 	extraReducers: (builder) => {
-		builder.addCase(fetchUserTrivias.fulfilled, (state, action) => {
-			state.trivias = action.payload;
+		builder.addCase(fetchUserTriviasThunk.fulfilled, (state, { payload }) => {
+			return (state = {
+				trivias: payload!,
+				loaded: true
+			});
 		});
 	}
 });
 
 const { actions, reducer } = triviaSlice;
 
-export { fetchUserTrivias };
+export { fetchUserTriviasThunk, actions };
 
 export default reducer;

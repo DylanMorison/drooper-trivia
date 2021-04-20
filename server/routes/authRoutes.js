@@ -38,7 +38,8 @@ router.post("/signup", async (req, res) => {
 		await user.save();
 
 		const token = jwt.sign({ userId: user._id }, config.get("jwtSecret"));
-		res.send({ token, userId: user._id, isVerified: false });
+		//leave out isVerified for now
+		res.send({ token, id: user._id });
 	} catch (err) {
 		console.log(err.message);
 		return res.status(422).send(err.message);
@@ -63,7 +64,8 @@ router.post("/signin", async (req, res) => {
 
 		const token = jwt.sign({ userId: user._id }, config.get("jwtSecret"));
 
-		res.send({ token, userId: user._id, isVerified: user.isVerified });
+		//leave out isVerified for now
+		res.send({ token, id: user._id });
 	} catch (err) {
 		console.log(err);
 		return res.status(422).send({ err: err.message });

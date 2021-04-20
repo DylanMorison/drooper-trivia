@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import TriviaCards from "./TriviaCards";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { fetchUserTrivias } from "../../../redux/triviaSlice";
+import { fetchUserTriviasThunk } from "../../../redux/triviaSlice";
 import { makeStyles, Fab, styled } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
+import { CircularProgress } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
 	container: {},
@@ -17,17 +18,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Trivias = () => {
-	const trivias = useAppSelector((state) => state.trivia.trivias);
+	const triviaState = useAppSelector((state) => state.trivia);
 	const dispatch = useAppDispatch();
 	const classes = useStyles();
 
 	useEffect(() => {
-		dispatch(fetchUserTrivias());
+		dispatch(fetchUserTriviasThunk());
 	}, [dispatch]);
 
 	return (
 		<div className={classes.container}>
-			<TriviaCards trivias={trivias} />
+			{triviaState.loaded ? <TriviaCards trivias={triviaState.trivias} /> : null}
+
 			<Fab className={classes.CreateTriviaFAB}>
 				<AddIcon />
 			</Fab>

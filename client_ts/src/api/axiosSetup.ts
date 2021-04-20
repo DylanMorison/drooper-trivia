@@ -16,9 +16,11 @@ const urlSetter = () => {
 	}
 };
 
+type endpointType = "/auth/signin" | "/auth/signup" | "/auth";
+
 export const createAxiosConfig = <PostDataType>(
 	method: Method,
-	endpoint: string,
+	endpoint: endpointType,
 	data: PostDataType | null
 ) => {
 	const backEndUrl = urlSetter().backEndURL;
