@@ -7,6 +7,8 @@ import {
 import { fetchTrivias } from "../app/pages/Trivias/utils/mockBackEnd";
 import { checkLocalStorage } from "./utils/checkLocalStorage";
 import { getFromLS } from "./utils/retrieveFromLocalStorage";
+import triviaApi from "../api/triviaRoutes";
+import axios, { AxiosResponse } from "axios";
 
 interface triviaType {
 	triviaTitle: string;
@@ -21,14 +23,17 @@ interface triviaType {
 export type triviasTypeArr = triviaType[];
 
 export interface initialStateType {
-	loaded: boolean | 'pending';
+	loaded: boolean | "pending";
 	trivias: triviasTypeArr;
 }
 
 const fetchUserTriviasThunk = createAsyncThunk("trivia/fetchUserTrivias", async () => {
+	const config = triviaApi.fetchTrivias;
 	try {
-		const response = await fetchTrivias();
-		return response;
+		const results: AxiosResponse<triviasTypeArr> = await axios(config);
+		console.log(results);
+
+		return results.data;
 	} catch (err) {
 		console.error("err fetching trivias", err);
 	}
@@ -46,7 +51,7 @@ const triviaSlice = createSlice({
 				loaded: false,
 				trivias: []
 			});
-		},
+		}
 	},
 	extraReducers: (builder) => {
 		builder.addCase(fetchUserTriviasThunk.fulfilled, (state, { payload }) => {

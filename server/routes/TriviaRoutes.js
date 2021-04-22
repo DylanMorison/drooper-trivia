@@ -7,7 +7,7 @@ const Trivia = mongoose.model("Trivia");
 
 const router = express.Router();
 
-router.get("/all-trivs-by-user", requireAuth, async (req, res) => {
+router.get("/", requireAuth, async (req, res) => {
 	const user = req.user;
 
 	try {

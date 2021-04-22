@@ -5,7 +5,7 @@ import config from "config";
 const User = mongoose.model("User");
 
 export default (req, res, next) => {
-	console.log("Authorization: ", req.get("Authorization"));
+	console.log("authorization: ", req.get("authorization"));
 	console.log("___________________________________");
 
 	const { authorization } = req.headers;

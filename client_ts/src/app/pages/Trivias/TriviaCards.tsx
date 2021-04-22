@@ -67,13 +67,16 @@ const TriviaCards = ({ trivias }: TriviaCardsProps) => {
 				{trivias.map((trivia, index) => (
 					<Grid md={3} sm={6} xs={12} key={index} item>
 						<Card variant="outlined" key={trivia.id} className={classes.Card}>
-							<CardActionArea disableRipple>
+							<CardActionArea>
 								<CardContent>
 									<Button
 										fullWidth
 										variant="text"
 										size="large"
-										style={{ textTransform: "none" }}
+										style={{ textTransform: "none", color: "black" }}
+										disableRipple
+										disableFocusRipple
+										disabled
 									>
 										{trivia.triviaTitle}
 									</Button>
@@ -103,6 +106,10 @@ const TriviaCards = ({ trivias }: TriviaCardsProps) => {
 			</>
 		);
 	};
+
+	if (!trivias) {
+		return null;
+	}
 
 	return (
 		<Container maxWidth="lg" className={classes.container}>

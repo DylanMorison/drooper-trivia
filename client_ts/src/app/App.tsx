@@ -21,7 +21,6 @@ const App = () => {
 	const [darkOrLight, setDarkOrLight] = useState<darkOrLightType>("light");
 	const trivsLoadedBool = useAppSelector((state) => state.trivia.loaded);
 
-
 	const darkModeToggle = () => {
 		if (darkOrLight === "dark") {
 			setDarkOrLight("light");
@@ -47,7 +46,7 @@ const App = () => {
 			<div className={classes.AppContainer}>
 				<Router>
 					<Header darkModeToggle={darkModeToggle} darkOrLight={darkOrLight} />
-					<LinearProgress color="secondary" value={100} variant="indeterminate" />
+					<LinearProgress color="secondary" value={100} variant="determinate" />
 					<Switch>
 						<Route path="/" component={Landing} exact />
 						<Route path="/login" component={Login} exact />

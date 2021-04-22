@@ -29,7 +29,6 @@ const Trivias = () => {
 	return (
 		<div className={classes.container}>
 			{triviaState.loaded ? <TriviaCards trivias={triviaState.trivias} /> : null}
-
 			<Fab className={classes.CreateTriviaFAB}>
 				<AddIcon />
 			</Fab>

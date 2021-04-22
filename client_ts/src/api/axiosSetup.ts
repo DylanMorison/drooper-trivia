@@ -16,7 +16,7 @@ const urlSetter = () => {
 	}
 };
 
-type endpointType = "/auth/signin" | "/auth/signup" | "/auth";
+type endpointType = "/auth/signin" | "/auth/signup" | "/auth" | "/triv";
 
 export const createAxiosConfig = <PostDataType>(
 	method: Method,
@@ -30,7 +30,7 @@ export const createAxiosConfig = <PostDataType>(
 		url: backEndUrl + endpoint,
 		headers: {
 			"Content-Type": "application/json",
-			Authorization: localStorage.getItem("Authorization")
+			authorization: localStorage.getItem("authorization")
 		},
 		data: JSON.stringify(data)
 	};

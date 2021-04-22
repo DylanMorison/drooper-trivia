@@ -1,9 +1,9 @@
 import { createAxiosConfig } from "./axiosSetup";
 
-export type authDataType = {
+export interface authDataType {
 	email: string;
 	password: string;
-};
+}
 
 const authApi = {
 	loadUserConfig: createAxiosConfig("get", "/auth", null),

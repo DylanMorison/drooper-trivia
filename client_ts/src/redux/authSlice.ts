@@ -56,7 +56,7 @@ const { actions, reducer } = authSlice;
 const { loadUser, logout, loginUser } = actions;
 
 export const loginUserThunk = createAsyncThunk(
-	"trivia/fetchUserTrivias",
+	"auth/loginUserThunk",
 	async (postData: authDataType, { dispatch }) => {
 		const config = authApi.signInUserConfig(postData);
 		try {
